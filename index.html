@@ -354,6 +354,26 @@ html,body{
 .note-card .q{font-size:13px;color:var(--text-main);line-height:1.6;font-style:italic;}
 .note-card .s{font-size:11px;color:var(--text-light);margin-top:6px;}
 
+/* 通用编辑按钮 */
+.item-btns{display:flex;gap:6px;flex-shrink:0;align-self:flex-start;}
+.item-btn{
+  width:28px;height:28px;border:none;background:rgba(255,255,255,0.7);
+  border-radius:8px;font-size:13px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:var(--transition);
+}
+.item-btn:hover{background:var(--pink-100);}
+.item-btn.edit{color:var(--pink-400);}
+.item-btn.del{color:#E57373;}
+
+/* 添加按钮通用 */
+.add-btn{
+  width:100%;padding:10px;border:2px dashed var(--pink-200);background:transparent;
+  border-radius:var(--radius-sm);color:var(--pink-400);font-size:13px;font-weight:600;
+  cursor:pointer;transition:var(--transition);font-family:inherit;
+}
+.add-btn:hover{background:var(--pink-50);}
+
 /* 备忘 */
 .memo-card{
   background:var(--pink-50);border-radius:var(--radius-sm);
@@ -364,12 +384,6 @@ html,body{
 .memo-card.blue{border-left:3px solid #A8D0E6;}
 .memo-text{font-size:13px;color:var(--text-main);line-height:1.6;}
 .memo-time{font-size:10px;color:var(--text-dim);margin-top:6px;}
-.memo-edit{
-  position:absolute;top:8px;right:8px;width:24px;height:24px;
-  border:none;background:transparent;color:var(--text-dim);cursor:pointer;
-  font-size:11px;opacity:0;transition:var(--transition);
-}
-.memo-card:hover .memo-edit{opacity:1;}
 
 /* 运动柱状图 */
 .week-chart{display:flex;align-items:flex-end;gap:5px;height:90px;padding:8px 0;}
@@ -516,39 +530,36 @@ html,body{
       <!-- 2. 读书 -->
       <div class="panel" id="panel-read">
         <div class="card">
-          <div class="card-title">📚 书单收纳 <span class="tag">3</span></div>
+          <div class="card-title">📚 书单收纳 <span class="tag" id="bookCount">0</span></div>
           <div class="tab-row">
             <button class="tab-btn active" onclick="switchBookTab(this,0)">待读</button>
             <button class="tab-btn" onclick="switchBookTab(this,1)">已读</button>
           </div>
-          <div id="bookList0">
-            <div class="list-item"><div class="list-icon" style="background:#FFD9E8;">📕</div><div class="list-body"><div class="list-title">人间草木</div><div class="list-desc">汪曾祺 · 散文</div></div><span class="list-tag" style="background:#FFF0F5;color:#F06292;">待读</span></div>
-            <div class="list-item"><div class="list-icon" style="background:#FCEBBE;">📗</div><div class="list-body"><div class="list-title">窗边的小豆豆</div><div class="list-desc">黑柳彻子 · 童话</div></div><span class="list-tag" style="background:#FFF0F5;color:#F06292;">待读</span></div>
-            <div class="list-item"><div class="list-icon" style="background:#D2EAF7;">📘</div><div class="list-body"><div class="list-title">孩子的宇宙</div><div class="list-desc">河合隼雄 · 心理</div></div><span class="list-tag" style="background:#FFF0F5;color:#F06292;">待读</span></div>
-          </div>
-          <div id="bookList1" style="display:none;">
-            <div class="list-item"><div class="list-icon" style="background:#DDEEDB;">📙</div><div class="list-body"><div class="list-title">小王子</div><div class="list-desc">圣埃克苏佩里 · 童话</div></div><span class="list-tag" style="background:#E8F5E9;color:#6DA884;">已读</span></div>
-          </div>
+          <div id="bookList0"></div>
+          <div id="bookList1" style="display:none;"></div>
+          <button class="add-btn" onclick="addBook()">+ 添加书籍</button>
         </div>
 
         <div class="card">
           <div class="card-title">⏱️ 阅读打卡</div>
           <div class="stat-row">
-            <div class="stat-pill"><div class="n">28</div><div class="l">累计天数</div></div>
-            <div class="stat-pill" style="background:#FFF9E6;"><div class="n">45'</div><div class="l">今日时长</div></div>
-            <div class="stat-pill" style="background:#EAF6FC;"><div class="n">12</div><div class="l">今日页码</div></div>
+            <div class="stat-pill"><div class="n" id="readDays">0</div><div class="l">累计天数</div></div>
+            <div class="stat-pill" style="background:#FFF9E6;"><div class="n" id="readToday">0'</div><div class="l">今日时长</div></div>
+            <div class="stat-pill" style="background:#EAF6FC;"><div class="n" id="readPages">0</div><div class="l">今日页码</div></div>
           </div>
+          <button class="add-btn" onclick="addReadLog()">+ 记录今日阅读</button>
         </div>
 
         <div class="card">
           <div class="card-title">✍️ 读书笔记</div>
-          <div class="note-card"><div class="q">"如果你来访我，我不在，请和我门外的花坐一会儿。"</div><div class="s">— 《人间草木》汪曾祺</div></div>
-          <div class="note-card"><div class="q">所有的大人都曾经是小孩，虽然，只有少数人记得。</div><div class="s">— 《小王子》</div></div>
+          <div id="bookNotes"></div>
+          <button class="add-btn" onclick="addNote('bookNotes')">+ 添加笔记</button>
         </div>
 
         <div class="card">
           <div class="card-title">💝 好书收藏</div>
-          <div class="list-item"><div class="list-icon" style="background:#FFF0F5;">🌟</div><div class="list-body"><div class="list-title">窗边的小豆豆</div><div class="list-desc">每次翻开都觉得被温柔以待</div></div><span class="list-tag" style="background:#FFD9E8;color:#F06292;">收藏</span></div>
+          <div id="bookFav"></div>
+          <button class="add-btn" onclick="addFav()">+ 收藏好书</button>
         </div>
       </div>
 
@@ -556,32 +567,31 @@ html,body{
       <div class="panel" id="panel-sport">
         <div class="card">
           <div class="card-title">🚶 每日运动打卡</div>
-          <div class="list-item"><div class="list-icon" style="background:#E8F5E9;">🚶‍♀️</div><div class="list-body"><div class="list-title">散步</div><div class="list-desc">30分钟 · 傍晚</div></div><span class="list-tag" style="background:#E8F5E9;color:#6DA884;">轻松</span></div>
-          <div class="list-item"><div class="list-icon" style="background:#E8F5E9;">🧘‍♀️</div><div class="list-body"><div class="list-title">轻柔拉伸</div><div class="list-desc">15分钟 · 睡前</div></div><span class="list-tag" style="background:#E8F5E9;color:#6DA884;">舒服</span></div>
-          <div class="list-item"><div class="list-icon" style="background:#E8F5E9;">🤰</div><div class="list-body"><div class="list-title">孕妇瑜伽</div><div class="list-desc">20分钟 · 午后</div></div><span class="list-tag" style="background:#E8F5E9;color:#6DA884;">不错</span></div>
+          <div id="sportList"></div>
+          <button class="add-btn" onclick="addSport()">+ 添加运动记录</button>
         </div>
 
         <div class="card">
           <div class="card-title">📔 运动日志</div>
-          <div class="note-card" style="border-left-color:#A8D5BA;"><div class="q" style="font-style:normal;">散步回来腿部轻松很多，宝宝也在肚子里动了几下～拉伸时腰背酸胀缓解不少。</div><div class="s">— 7月28日</div></div>
-          <div class="note-card" style="border-left-color:#A8D5BA;"><div class="q" style="font-style:normal;">今天尝试了新的拉伸动作，肩颈放松了很多。</div><div class="s">— 7月27日</div></div>
+          <div id="sportLog"></div>
+          <button class="add-btn" onclick="addNote('sportLog','运动日志')">+ 记录运动感受</button>
         </div>
 
         <div class="card">
           <div class="card-title">📊 每周运动统计</div>
           <div class="stat-row">
-            <div class="stat-pill" style="background:#E8F5E9;"><div class="n">5</div><div class="l">本周天数</div></div>
-            <div class="stat-pill" style="background:#FFF9E6;"><div class="n">125'</div><div class="l">总时长</div></div>
-            <div class="stat-pill"><div class="n">3</div><div class="l">种类</div></div>
+            <div class="stat-pill" style="background:#E8F5E9;"><div class="n" id="sportDays">0</div><div class="l">本周天数</div></div>
+            <div class="stat-pill" style="background:#FFF9E6;"><div class="n" id="sportTotal">0'</div><div class="l">总时长</div></div>
+            <div class="stat-pill"><div class="n" id="sportTypes">0</div><div class="l">种类</div></div>
           </div>
           <div class="week-chart">
-            <div class="bar-col"><div class="bar" style="height:60%"></div><div class="d">一</div></div>
-            <div class="bar-col"><div class="bar" style="height:40%"></div><div class="d">二</div></div>
-            <div class="bar-col"><div class="bar" style="height:80%"></div><div class="d">三</div></div>
-            <div class="bar-col"><div class="bar" style="height:10%"></div><div class="d">四</div></div>
-            <div class="bar-col"><div class="bar" style="height:50%"></div><div class="d">五</div></div>
-            <div class="bar-col"><div class="bar" style="height:70%"></div><div class="d">六</div></div>
-            <div class="bar-col"><div class="bar" style="height:90%"></div><div class="d">日</div></div>
+            <div class="bar-col"><div class="bar" id="bar0" style="height:0%"></div><div class="d">一</div></div>
+            <div class="bar-col"><div class="bar" id="bar1" style="height:0%"></div><div class="d">二</div></div>
+            <div class="bar-col"><div class="bar" id="bar2" style="height:0%"></div><div class="d">三</div></div>
+            <div class="bar-col"><div class="bar" id="bar3" style="height:0%"></div><div class="d">四</div></div>
+            <div class="bar-col"><div class="bar" id="bar4" style="height:0%"></div><div class="d">五</div></div>
+            <div class="bar-col"><div class="bar" id="bar5" style="height:0%"></div><div class="d">六</div></div>
+            <div class="bar-col"><div class="bar" id="bar6" style="height:0%"></div><div class="d">日</div></div>
           </div>
         </div>
       </div>
@@ -590,23 +600,20 @@ html,body{
       <div class="panel" id="panel-study">
         <div class="card">
           <div class="card-title">🖌️ 练字打卡</div>
-          <div class="stat-row">
-            <div class="stat-pill" style="background:#FFF9E6;"><div class="n">25'</div><div class="l">毛笔 · 九成宫</div></div>
-            <div class="stat-pill" style="background:#EAF6FC;"><div class="n">15'</div><div class="l">硬笔 · 田英章</div></div>
-            <div class="stat-pill"><div class="n">18</div><div class="l">坚持天数</div></div>
-          </div>
+          <div id="calliList"></div>
+          <button class="add-btn" onclick="addCalli()">+ 添加练字记录</button>
         </div>
 
         <div class="card">
           <div class="card-title">💡 练字心得</div>
-          <div class="note-card" style="border-left-color:#F0D78C;"><div class="q" style="font-style:normal;">今天写"永"字，竖钩收笔不够利落。老师说要"意在笔先"，落笔前先想好走势。</div><div class="s">— 毛笔心得</div></div>
-          <div class="note-card" style="border-left-color:#F0D78C;"><div class="q" style="font-style:normal;">硬笔楷书横画注意"起笔顿、行笔轻、收笔顿"，节奏感好了很多。</div><div class="s">— 硬笔心得</div></div>
+          <div id="calliNotes"></div>
+          <button class="add-btn" onclick="addNote('calliNotes','练字心得')">+ 添加心得</button>
         </div>
 
         <div class="card">
           <div class="card-title">🧠 知识积累</div>
-          <div class="note-card" style="border-left-color:#A8D0E6;"><div class="q" style="font-style:normal;">"落霞与孤鹜齐飞，秋水共长天一色。" —— 王勃《滕王阁序》</div><div class="s">📜 文学 · 唐代散文</div></div>
-          <div class="note-card" style="border-left-color:#A8D0E6;"><div class="q" style="font-style:normal;">贞观之治：唐太宗知人善任、虚心纳谏，开创盛世。</div><div class="s">🏛️ 历史 · 唐朝</div></div>
+          <div id="knowList"></div>
+          <button class="add-btn" onclick="addKnow()">+ 添加知识条目</button>
         </div>
       </div>
 
@@ -614,27 +621,26 @@ html,body{
       <div class="panel" id="panel-teach">
         <div class="card">
           <div class="card-title">📂 备课专区</div>
-          <div class="list-item"><div class="list-icon" style="background:#FFF0F5;">💡</div><div class="list-body"><div class="list-title">教学理念</div><div class="list-desc">育人初心 · 教学主张</div></div><span class="list-tag" style="background:#FFF0F5;color:#F06292;">3篇</span></div>
-          <div class="list-item"><div class="list-icon" style="background:#EAF6FC;">📐</div><div class="list-body"><div class="list-title">课标与教案</div><div class="list-desc">课时教案 · 课标解读</div></div><span class="list-tag" style="background:#EAF6FC;color:#5B9BC9;">12篇</span></div>
-          <div class="list-item"><div class="list-icon" style="background:#FFF9E6;">🎨</div><div class="list-body"><div class="list-title">教学设计</div><div class="list-desc">活动设计 · 课堂流程</div></div><span class="list-tag" style="background:#FFF9E6;color:#C4A02E;">8篇</span></div>
-          <div class="list-item"><div class="list-icon" style="background:#E8F5E9;">🖼️</div><div class="list-body"><div class="list-title">课件素材</div><div class="list-desc">PPT · 图片 · 音频</div></div><span class="list-tag" style="background:#E8F5E9;color:#6DA884;">25个</span></div>
+          <div id="teachPrep"></div>
+          <button class="add-btn" onclick="addTeach('teachPrep','备课')">+ 添加备课内容</button>
         </div>
 
         <div class="card">
           <div class="card-title">🔍 教研资料</div>
-          <div class="list-item"><div class="list-icon" style="background:#EAF6FC;">👂</div><div class="list-body"><div class="list-title">听课记录</div><div class="list-desc">同行课堂观摩笔记</div></div><span class="list-tag" style="background:#EAF6FC;color:#5B9BC9;">6篇</span></div>
-          <div class="list-item"><div class="list-icon" style="background:#FFF0F5;">⭐</div><div class="list-body"><div class="list-title">教学评价</div><div class="list-desc">互评 · 自评记录</div></div><span class="list-tag" style="background:#FFF0F5;color:#F06292;">4篇</span></div>
+          <div id="teachResearch"></div>
+          <button class="add-btn" onclick="addTeach('teachResearch','教研')">+ 添加教研资料</button>
         </div>
 
         <div class="card">
           <div class="card-title">✍️ 文稿写作</div>
-          <div class="list-item"><div class="list-icon" style="background:#FFF0F5;">🎤</div><div class="list-body"><div class="list-title">发言稿</div><div class="list-desc">会议 · 活动发言</div></div><span class="list-tag" style="background:#FFF0F5;color:#F06292;">2篇</span></div>
-          <div class="list-item"><div class="list-icon" style="background:#E8F5E9;">师德</div><div class="list-body"><div class="list-title">师德总结</div><div class="list-desc">学期师德述职</div></div><span class="list-tag" style="background:#E8F5E9;color:#6DA884;">1篇</span></div>
+          <div id="teachDoc"></div>
+          <button class="add-btn" onclick="addTeach('teachDoc','文稿')">+ 添加文稿</button>
         </div>
 
         <div class="card">
           <div class="card-title">🌱 学生管理</div>
-          <div class="note-card" style="border-left-color:#A8D5BA;"><div class="q" style="font-style:normal;">小宇今天主动举手回答问题了，虽然声音还小，但能感受到他的勇气在生长。</div><div class="s">— 班级育人心得</div></div>
+          <div id="teachStudent"></div>
+          <button class="add-btn" onclick="addNote('teachStudent','学生管理')">+ 添加育人心得</button>
         </div>
       </div>
 
@@ -642,18 +648,20 @@ html,body{
       <div class="panel" id="panel-memo">
         <div class="card">
           <div class="card-title">💡 灵感速记</div>
-          <div class="memo-card pink"><div class="memo-text">给孩子们的阅读角加一个"好书推荐墙"，每本书配一张手绘小卡片。</div><div class="memo-time">7月28日 14:30</div><button class="memo-edit">编辑</button></div>
+          <div id="memoInsp"></div>
+          <button class="add-btn" onclick="addMemo('memoInsp','灵感')">+ 记录灵感</button>
         </div>
 
         <div class="card">
           <div class="card-title">📌 生活备忘</div>
-          <div class="memo-card yellow"><div class="memo-text"><strong style="color:#F06292;">[重要]</strong> 产检提醒：8月5日 上午10:00 · 唐筛，空腹带医保卡</div><div class="memo-time">本周事项</div><button class="memo-edit">编辑</button></div>
-          <div class="memo-card yellow"><div class="memo-text">购物清单：叶酸片、牛奶、核桃、红枣、小米</div><div class="memo-time">7月28日</div><button class="memo-edit">编辑</button></div>
+          <div id="memoLife"></div>
+          <button class="add-btn" onclick="addMemo('memoLife','生活')">+ 添加备忘</button>
         </div>
 
         <div class="card">
           <div class="card-title">📝 文字草稿</div>
-          <div class="memo-card blue"><div class="memo-text">"慢慢来，比较快。"允许事情有自己的节奏，反而走得更稳更远。</div><div class="memo-time">随笔 · 7月28日</div><button class="memo-edit">编辑</button></div>
+          <div id="memoDraft"></div>
+          <button class="add-btn" onclick="addMemo('memoDraft','草稿')">+ 新建草稿</button>
         </div>
       </div>
 
@@ -668,39 +676,26 @@ html,body{
 
         <div class="card">
           <div class="review-label">✅ 今日完成事项</div>
-          <div class="review-box">
-            <div class="review-item">散步30分钟 + 睡前拉伸15分钟</div>
-            <div class="review-item">毛笔练字25分钟，临摹《九成宫》</div>
-            <div class="review-item">阅读《人间草木》12页</div>
-            <div class="review-item">整理下周教案框架</div>
-          </div>
+          <div id="reviewDone"></div>
+          <button class="add-btn" onclick="addReview('reviewDone','完成事项')">+ 添加</button>
         </div>
 
         <div class="card">
           <div class="review-label">🌟 收获与成长</div>
-          <div class="review-box">
-            <div class="review-item"><strong>教学：</strong>重新思考"以学生为中心"的课堂设计。</div>
-            <div class="review-item"><strong>自学：</strong>练字时体会到"意在笔先"的道理。</div>
-            <div class="review-item"><strong>生活：</strong>散步时宝宝踢了好几下，很幸福。</div>
-          </div>
+          <div id="reviewGain"></div>
+          <button class="add-btn" onclick="addReview('reviewGain','收获')">+ 添加</button>
         </div>
 
         <div class="card">
           <div class="review-label">🤔 不足之处</div>
-          <div class="review-box">
-            <div class="review-item">下午刷了一会儿手机，注意力还需训练。</div>
-            <div class="review-item">硬笔练字时间有点短，明天争取20分钟以上。</div>
-          </div>
+          <div id="reviewLack"></div>
+          <button class="add-btn" onclick="addReview('reviewLack','不足')">+ 添加</button>
         </div>
 
         <div class="card">
           <div class="review-label">🌅 明日简易规划</div>
-          <div class="review-box">
-            <div class="review-item">晨间：散步30分钟 + 朗读古文15分钟</div>
-            <div class="review-item">上午：完成教案PPT制作</div>
-            <div class="review-item">午后：练字40分钟</div>
-            <div class="review-item">晚间：阅读30分钟 + 复盘</div>
-          </div>
+          <div id="reviewPlan"></div>
+          <button class="add-btn" onclick="addReview('reviewPlan','规划')">+ 添加</button>
         </div>
       </div>
 
@@ -708,30 +703,14 @@ html,body{
       <div class="panel" id="panel-recipe">
         <div class="card">
           <div class="card-title">🍽️ 每日三餐规划</div>
-          <div class="meal-card m1">
-            <div class="meal-h"><span class="meal-icon">🌅</span><span class="meal-name">早餐</span><span class="meal-time">07:30</span></div>
-            <div class="meal-tags"><span class="meal-tag">温牛奶</span><span class="meal-tag">水煮蛋</span><span class="meal-tag">全麦面包</span><span class="meal-tag">蓝莓</span></div>
-          </div>
-          <div class="meal-card m2">
-            <div class="meal-h"><span class="meal-icon">☀️</span><span class="meal-name">午餐</span><span class="meal-time">12:00</span></div>
-            <div class="meal-tags"><span class="meal-tag">小米饭</span><span class="meal-tag">清蒸鲈鱼</span><span class="meal-tag">蒜蓉西兰花</span><span class="meal-tag">番茄豆腐汤</span></div>
-          </div>
-          <div class="meal-card m3">
-            <div class="meal-h"><span class="meal-icon">🌙</span><span class="meal-name">晚餐</span><span class="meal-time">18:00</span></div>
-            <div class="meal-tags"><span class="meal-tag">小米南瓜粥</span><span class="meal-tag">凉拌菠菜</span><span class="meal-tag">山药炖鸡汤</span></div>
-          </div>
+          <div id="mealList"></div>
+          <button class="add-btn" onclick="addMeal()">+ 添加一餐</button>
         </div>
 
         <div class="card">
           <div class="card-title">📖 食谱收藏</div>
-          <div class="tab-row">
-            <button class="tab-btn active" onclick="switchRecipeTab(this)">全部</button>
-            <button class="tab-btn" onclick="switchRecipeTab(this)">养胃</button>
-            <button class="tab-btn" onclick="switchRecipeTab(this)">滋补</button>
-          </div>
-          <div class="list-item"><div class="list-icon" style="background:#E8F5E9;">🍲</div><div class="list-body"><div class="list-title">山药炖鸡汤</div><div class="list-desc">健脾养胃 · 孕期滋补</div></div><span class="list-tag" style="background:#E8F5E9;color:#6DA884;">滋补</span></div>
-          <div class="list-item"><div class="list-icon" style="background:#FFF9E6;">🥣</div><div class="list-body"><div class="list-title">小米南瓜粥</div><div class="list-desc">养胃暖身 · 易消化</div></div><span class="list-tag" style="background:#FFF9E6;color:#C4A02E;">养胃</span></div>
-          <div class="list-item"><div class="list-icon" style="background:#EAF6FC;">🐟</div><div class="list-body"><div class="list-title">清蒸鲈鱼</div><div class="list-desc">高蛋白 · 清淡鲜美</div></div><span class="list-tag" style="background:#EAF6FC;color:#5B9BC9;">家常</span></div>
+          <div id="recipeList"></div>
+          <button class="add-btn" onclick="addRecipe()">+ 收藏食谱</button>
         </div>
       </div>
 
@@ -776,15 +755,8 @@ function selectDate(d){selected=d;renderCal();}
 function changeMonth(d){calDate.setMonth(calDate.getMonth()+d);renderCal();}
 
 let todos=[];
-function loadTodos(){
-  try{
-    const s=localStorage.getItem('soft_todo');
-    if(s) todos=JSON.parse(s);
-  }catch(e){todos=[];}
-}
-function saveTodos(){
-  try{localStorage.setItem('soft_todo',JSON.stringify(todos));}catch(e){}
-}
+function loadTodos(){try{const s=localStorage.getItem('soft_todo');if(s)todos=JSON.parse(s);}catch(e){todos=[];}}
+function saveTodos(){try{localStorage.setItem('soft_todo',JSON.stringify(todos));}catch(e){}}
 function renderTodos(){
   const el=document.getElementById('todoList');
   if(todos.length===0){
@@ -795,7 +767,7 @@ function renderTodos(){
         <div class="todo-check ${t.done?'checked':''}" onclick="toggleTodo(${i})">
           <svg viewBox="0 0 24 24"><path d="M5 12 L10 17 L19 7" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        <div class="todo-text" onclick="editTodo(${i})">${t.text}</div>
+        <div class="todo-text" onclick="editTodo(${i})">${esc(t.text)}</div>
         <div class="todo-btns">
           <button class="todo-btn edit" onclick="editTodo(${i})">✎</button>
           <button class="todo-btn del" onclick="delTodo(${i})">✕</button>
@@ -810,27 +782,288 @@ function renderTodos(){
   document.getElementById('progressFill').style.width=pct+'%';
 }
 function toggleTodo(i){todos[i].done=!todos[i].done;saveTodos();renderTodos();}
-function delTodo(i){
-  if(confirm('删除这条待办？')){todos.splice(i,1);saveTodos();renderTodos();}
+function delTodo(i){if(confirm('删除这条待办？')){todos.splice(i,1);saveTodos();renderTodos();}}
+function addTodo(){const inp=document.getElementById('todoInput');const v=inp.value.trim();if(v){todos.push({text:v,done:false});inp.value='';saveTodos();renderTodos();}}
+function editTodo(i){const v=prompt('编辑待办：',todos[i].text);if(v!==null){const t=v.trim();if(t){todos[i].text=t;saveTodos();renderTodos();}else if(confirm('内容为空，是否删除？')){todos.splice(i,1);saveTodos();renderTodos();}}}
+function resetAll(){if(confirm('确定要重置所有待办吗？')){todos.forEach(t=>t.done=false);saveTodos();renderTodos();}}
+
+// ====== 通用数据管理 ======
+function esc(s){return (s||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function loadData(key){try{const s=localStorage.getItem(key);return s?JSON.parse(s):[];}catch(e){return [];}}
+function saveData(key,data){try{localStorage.setItem(key,JSON.stringify(data));}catch(e){}}
+
+// 通用笔记渲染（读书笔记、运动日志、练字心得、知识积累、学生管理）
+function renderNotes(containerId,key,borderColor){
+  const data=loadData(key);
+  const el=document.getElementById(containerId);
+  if(data.length===0){
+    el.innerHTML='<div style="text-align:center;color:var(--text-dim);font-size:12px;padding:16px 0;">还没有内容，点击下方添加 🌸</div>';
+    return;
+  }
+  el.innerHTML=data.map((item,i)=>`
+    <div class="note-card" style="${borderColor?'border-left-color:'+borderColor:''}">
+      <div class="q" style="font-style:normal;">${esc(item.text)}</div>
+      <div class="s">${esc(item.source||'')}</div>
+      <div class="item-btns" style="margin-top:6px;">
+        <button class="item-btn edit" onclick="editNote('${key}',${i})">✎ 编辑</button>
+        <button class="item-btn del" onclick="delNote('${key}',${i},'${containerId}','${borderColor||''}')">✕ 删除</button>
+      </div>
+    </div>
+  `).join('');
 }
-function addTodo(){
-  const inp=document.getElementById('todoInput');
-  const v=inp.value.trim();
-  if(v){todos.push({text:v,done:false});inp.value='';saveTodos();renderTodos();}
-}
-function editTodo(i){
-  const v=prompt('编辑待办：',todos[i].text);
-  if(v!==null){
-    const t=v.trim();
-    if(t){todos[i].text=t;saveTodos();renderTodos();}
-    else if(confirm('内容为空，是否删除这条待办？')){todos.splice(i,1);saveTodos();renderTodos();}
+function addNote(containerId,label){
+  const text=prompt('输入'+(label||'内容')+'：');
+  if(text&&text.trim()){
+    const data=loadData(containerId);
+    data.push({text:text.trim(),source:new Date().toLocaleDateString('zh-CN')});
+    saveData(containerId,data);
+    const bc=containerId==='sportLog'?'#A8D5BA':containerId==='calliNotes'?'#F0D78C':containerId==='knowList'?'#A8D0E6':containerId==='teachStudent'?'#A8D5BA':'';
+    renderNotes(containerId,containerId,bc);
   }
 }
-function resetAll(){
-  if(confirm('确定要重置所有待办吗？已完成项将取消勾选。')){
-    todos.forEach(t=>t.done=false);saveTodos();renderTodos();
+function editNote(key,i){
+  const data=loadData(key);
+  const v=prompt('编辑内容：',data[i].text);
+  if(v!==null&&v.trim()){data[i].text=v.trim();saveData(key,data);
+    const bc=key==='sportLog'?'#A8D5BA':key==='calliNotes'?'#F0D78C':key==='knowList'?'#A8D0E6':key==='teachStudent'?'#A8D5BA':'';
+    renderNotes(key,key,bc);
   }
 }
+function delNote(key,i,containerId,borderColor){
+  if(confirm('删除这条？')){const data=loadData(key);data.splice(i,1);saveData(key,data);renderNotes(containerId,key,borderColor);}
+}
+
+// ====== 读书：书单 ======
+function renderBooks(){
+  const books=loadData('soft_books');
+  const list0=document.getElementById('bookList0');
+  const list1=document.getElementById('bookList1');
+  const w=[books.filter(b=>b.status===0),books.filter(b=>b.status===1)];
+  document.getElementById('bookCount').textContent=books.length;
+  [['待读','#FFF0F5','#F06292','#FFD9E8'],['已读','#E8F5E9','#6DA884','#DDEEDB']].forEach((cfg,idx)=>{
+    const el=idx===0?list0:list1;
+    if(w[idx].length===0){el.innerHTML='<div style="text-align:center;color:var(--text-dim);font-size:12px;padding:12px 0;">暂无'+cfg[0]+'书籍</div>';return;}
+    el.innerHTML=w[idx].map(b=>{
+      const i=books.indexOf(b);
+      return `<div class="list-item"><div class="list-icon" style="background:${cfg[3]};">${cfg[0]==='待读'?'📕':'📙'}</div><div class="list-body"><div class="list-title">${esc(b.title)}</div><div class="list-desc">${esc(b.author||'')} · ${esc(b.cat||'')}</div></div><span class="list-tag" style="background:${cfg[1]};color:${cfg[2]};">${cfg[0]}</span><div class="item-btns"><button class="item-btn edit" onclick="editBook(${i})">✎</button><button class="item-btn del" onclick="delBook(${i})">✕</button></div></div>`;
+    }).join('');
+  });
+}
+function addBook(){
+  const title=prompt('书名：');if(!title||!title.trim())return;
+  const author=prompt('作者（可选）：')||'';
+  const cat=prompt('分类（如散文/童话/心理，可选）：')||'';
+  const books=loadData('soft_books');
+  books.push({title:title.trim(),author:author.trim(),cat:cat.trim(),status:0});
+  saveData('soft_books',books);renderBooks();
+}
+function editBook(i){
+  const books=loadData('soft_books');
+  const title=prompt('书名：',books[i].title);if(!title)return;
+  books[i].title=title.trim();
+  books[i].author=(prompt('作者：',books[i].author||'')||'').trim();
+  books[i].cat=(prompt('分类：',books[i].cat||'')||'').trim();
+  books[i].status=confirm('是否标记为已读？')?1:0;
+  saveData('soft_books',books);renderBooks();
+}
+function delBook(i){if(confirm('删除这本书？')){const b=loadData('soft_books');b.splice(i,1);saveData('soft_books',b);renderBooks();}}
+
+// ====== 读书：阅读打卡 ======
+function renderReadStats(){
+  const logs=loadData('soft_readlog');
+  document.getElementById('readDays').textContent=logs.length;
+  const today=new Date().toLocaleDateString('zh-CN');
+  const t=logs.filter(l=>l.date===today);
+  document.getElementById('readToday').textContent=t.length?t[0].minutes+"'":'0\'';
+  document.getElementById('readPages').textContent=t.length?t[0].pages:0;
+}
+function addReadLog(){
+  const m=prompt('今日阅读时长（分钟）：');if(!m)return;
+  const p=prompt('今日阅读页码：')||'0';
+  const logs=loadData('soft_readlog');
+  const today=new Date().toLocaleDateString('zh-CN');
+  const exist=logs.findIndex(l=>l.date===today);
+  const entry={date:today,minutes:parseInt(m)||0,pages:parseInt(p)||0};
+  if(exist>=0)logs[exist]=entry;else logs.push(entry);
+  saveData('soft_readlog',logs);renderReadStats();
+}
+
+// ====== 读书：好书收藏 ======
+function renderFav(){
+  const fav=loadData('soft_fav');
+  const el=document.getElementById('bookFav');
+  if(fav.length===0){el.innerHTML='<div style="text-align:center;color:var(--text-dim);font-size:12px;padding:12px 0;">暂无收藏 🌸</div>';return;}
+  el.innerHTML=fav.map((b,i)=>`<div class="list-item"><div class="list-icon" style="background:#FFF0F5;">🌟</div><div class="list-body"><div class="list-title">${esc(b.title)}</div><div class="list-desc">${esc(b.note||'')}</div></div><span class="list-tag" style="background:#FFD9E8;color:#F06292;">收藏</span><div class="item-btns"><button class="item-btn edit" onclick="editFav(${i})">✎</button><button class="item-btn del" onclick="delFav(${i})">✕</button></div></div>`).join('');
+}
+function addFav(){const t=prompt('书名：');if(!t||!t.trim())return;const n=prompt('推荐理由（可选）：')||'';const f=loadData('soft_fav');f.push({title:t.trim(),note:n.trim()});saveData('soft_fav',f);renderFav();}
+function editFav(i){const f=loadData('soft_fav');const t=prompt('书名：',f[i].title);if(!t)return;f[i].title=t.trim();f[i].note=(prompt('推荐理由：',f[i].note||'')||'').trim();saveData('soft_fav',f);renderFav();}
+function delFav(i){if(confirm('取消收藏？')){const f=loadData('soft_fav');f.splice(i,1);saveData('soft_fav',f);renderFav();}}
+
+// ====== 运动 ======
+function renderSport(){
+  const s=loadData('soft_sport');
+  const el=document.getElementById('sportList');
+  if(s.length===0){el.innerHTML='<div style="text-align:center;color:var(--text-dim);font-size:12px;padding:12px 0;">还没有运动记录 🌸</div>';}
+  else{
+    el.innerHTML=s.map((it,i)=>`<div class="list-item"><div class="list-icon" style="background:#E8F5E9;">${esc(it.icon||'🏃')}</div><div class="list-body"><div class="list-title">${esc(it.type)}</div><div class="list-desc">${esc(it.duration||'')} · ${esc(it.time||'')}</div></div><span class="list-tag" style="background:#E8F5E9;color:#6DA884;">${esc(it.feel||'')}</span><div class="item-btns"><button class="item-btn edit" onclick="editSport(${i})">✎</button><button class="item-btn del" onclick="delSport(${i})">✕</button></div></div>`).join('');
+  }
+  // 统计
+  document.getElementById('sportDays').textContent=new Set(s.map(x=>x.date||'')).size;
+  const total=s.reduce((a,b)=>a+(parseInt(b.duration)||0),0);
+  document.getElementById('sportTotal').textContent=total+"'";
+  document.getElementById('sportTypes').textContent=new Set(s.map(x=>x.type)).size;
+  // 柱状图
+  const week=[0,0,0,0,0,0,0];
+  s.forEach(it=>{if(it.dayIdx>=0&&it.dayIdx<7)week[it.dayIdx]=Math.min(100,week[it.dayIdx]+(parseInt(it.duration)||0)*2);});
+  week.forEach((v,i)=>{const b=document.getElementById('bar'+i);if(b)b.style.height=Math.max(4,v)+'%';});
+}
+function addSport(){
+  const type=prompt('运动类型（如散步/拉伸/瑜伽）：');if(!type||!type.trim())return;
+  const duration=prompt('时长（分钟）：')||'';
+  const time=prompt('时段（如傍晚/睡前）：')||'';
+  const feel=prompt('感受（如轻松/舒服）：')||'';
+  const icon=prompt('图标emoji（如（如🚶🧘🤰，可选）：')||'🏃';
+  const s=loadData('soft_sport');
+  s.push({type:type.trim(),duration,time,feel,icon,date:new Date().toLocaleDateString('zh-CN'),dayIdx:new Date().getDay()});
+  saveData('soft_sport',s);renderSport();
+}
+function editSport(i){
+  const s=loadData('soft_sport');
+  const type=prompt('运动类型：',s[i].type);if(!type)return;
+  s[i].type=type.trim();
+  s[i].duration=(prompt('时长（分钟）：',s[i].duration||'')||'').trim();
+  s[i].time=(prompt('时段：',s[i].time||'')||'').trim();
+  s[i].feel=(prompt('感受：',s[i].feel||'')||'').trim();
+  s[i].icon=(prompt('图标emoji：',s[i].icon||'🏃')||'🏃').trim();
+  saveData('soft_sport',s);renderSport();
+}
+function delSport(i){if(confirm('删除这条记录？')){const s=loadData('soft_sport');s.splice(i,1);saveData('soft_sport',s);renderSport();}}
+
+// ====== 学习：练字打卡 ======
+function renderCalli(){
+  const c=loadData('soft_calli');
+  const el=document.getElementById('calliList');
+  if(c.length===0){el.innerHTML='<div style="text-align:center;color:var(--text-dim);font-size:12px;padding:12px 0;">还没有练字记录 🌸</div>';}
+  else{
+    el.innerHTML=c.map((it,i)=>`<div class="list-item"><div class="list-icon" style="background:#FFF9E6;">${esc(it.type||'🖌')}</div><div class="list-body"><div class="list-title">${esc(it.minutes||'0')}分钟</div><div class="list-desc">${esc(it.desc||'')}</div></div><span class="list-tag" style="background:#FFF9E6;color:#C4A02E;">${esc(it.day||'')}</span><div class="item-btns"><button class="item-btn edit" onclick="editCalli(${i})">✎</button><button class="item-btn del" onclick="delCalli(${i})">✕</button></div></div>`).join('');
+  }
+}
+function addCalli(){
+  const type=prompt('类型（毛笔/硬笔）：')||'🖌';
+  const minutes=prompt('时长（分钟）：')||'0';
+  const desc=prompt('临摹内容（如九成宫/田英章楷书）：')||'';
+  const c=loadData('soft_calli');
+  c.push({type,minutes,desc,day:'第'+(c.length+1)+'天',date:new Date().toLocaleDateString('zh-CN')});
+  saveData('soft_calli',c);renderCalli();
+}
+function editCalli(i){const c=loadData('soft_calli');c[i].minutes=(prompt('时长（分钟）：',c[i].minutes)||'').trim();c[i].desc=(prompt('临摹内容：',c[i].desc||'')||'').trim();c[i].type=(prompt('类型：',c[i].type||'🖌')||'🖌').trim();saveData('soft_calli',c);renderCalli();}
+function delCalli(i){if(confirm('删除？')){const c=loadData('soft_calli');c.splice(i,1);saveData('soft_calli',c);renderCalli();}}
+
+// ====== 学习：知识积累 ======
+function renderKnow(){
+  renderNotes('knowList','knowList','#A8D0E6');
+}
+function addKnow(){
+  const text=prompt('输入知识内容：');if(!text||!text.trim())return;
+  const cat=prompt('分类（如文学/历史/哲学，可选）：')||'';
+  const data=loadData('knowList');
+  data.push({text:text.trim(),source:cat.trim()||'知识积累'});
+  saveData('knowList',data);renderKnow();
+}
+
+// ====== 教学 ======
+function renderTeach(containerId,key){
+  const data=loadData(key);
+  const el=document.getElementById(containerId);
+  if(data.length===0){el.innerHTML='<div style="text-align:center;color:var(--text-dim);font-size:12px;padding:12px 0;">还没有内容 🌸</div>';return;}
+  el.innerHTML=data.map((it,i)=>`<div class="list-item"><div class="list-icon" style="background:${esc(it.color||'#FFF0F5')};">${esc(it.icon||'📂')}</div><div class="list-body"><div class="list-title">${esc(it.title)}</div><div class="list-desc">${esc(it.desc||'')}</div></div><span class="list-tag" style="background:${esc(it.tagColor||'#FFF0F5')};color:${esc(it.tagText||'#F06292')};">${esc(it.count||'')}</span><div class="item-btns"><button class="item-btn edit" onclick="editTeach('${key}',${i})">✎</button><button class="item-btn del" onclick="delTeach('${key}',${i})">✕</button></div></div>`).join('');
+}
+function addTeach(containerId,label){
+  const title=prompt(label+'标题：');if(!title||!title.trim())return;
+  const desc=prompt('描述（可选）：')||'';
+  const data=loadData(containerId);
+  data.push({title:title.trim(),desc:desc.trim(),icon:'📂',color:'#FFF0F5',tagColor:'#FFF0F5',tagText:'#F06292',count:''});
+  saveData(containerId,data);renderTeach(containerId,containerId);
+}
+function editTeach(key,i){const data=loadData(key);const t=prompt('标题：',data[i].title);if(!t)return;data[i].title=t.trim();data[i].desc=(prompt('描述：',data[i].desc||'')||'').trim();saveData(key,data);renderTeach(key,key);}
+function delTeach(key,i){if(confirm('删除？')){const d=loadData(key);d.splice(i,1);saveData(key,d);renderTeach(key,key);}}
+
+// ====== 备忘录 ======
+function renderMemo(containerId,key,cardClass){
+  const data=loadData(key);
+  const el=document.getElementById(containerId);
+  if(data.length===0){el.innerHTML='<div style="text-align:center;color:var(--text-dim);font-size:12px;padding:12px 0;">还没有内容 🌸</div>';return;}
+  el.innerHTML=data.map((it,i)=>`<div class="memo-card ${cardClass}"><div class="memo-text">${esc(it.text)}</div><div class="memo-time">${esc(it.time||'')}</div><div class="item-btns" style="margin-top:6px;"><button class="item-btn edit" onclick="editMemo('${key}',${i})">✎ 编辑</button><button class="item-btn del" onclick="delMemo('${key}','${containerId}','${cardClass}',${i})">✕ 删除</button></div></div>`).join('');
+}
+function addMemo(containerId,label){
+  const text=prompt('输入'+label+'内容：');if(!text||!text.trim())return;
+  const data=loadData(containerId);
+  data.push({text:text.trim(),time:new Date().toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})});
+  saveData(containerId,data);
+  const cc=containerId==='memoInsp'?'pink':containerId==='memoLife'?'yellow':'blue';
+  renderMemo(containerId,containerId,cc);
+}
+function editMemo(key,i){const data=loadData(key);const v=prompt('编辑内容：',data[i].text);if(v!==null&&v.trim()){data[i].text=v.trim();data[i].time=new Date().toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});saveData(key,data);
+  const cc=key==='memoInsp'?'pink':key==='memoLife'?'yellow':'blue';renderMemo(key,key,cc);}}
+function delMemo(key,containerId,cardClass,i){if(confirm('删除？')){const d=loadData(key);d.splice(i,1);saveData(key,d);renderMemo(containerId,key,cardClass);}}
+
+// ====== 每日复盘 ======
+function renderReview(containerId,key){
+  const data=loadData(key);
+  const el=document.getElementById(containerId);
+  if(data.length===0){el.innerHTML='<div style="text-align:center;color:var(--text-dim);font-size:12px;padding:8px 0;">还没有内容 🌸</div>';return;}
+  el.innerHTML=data.map((it,i)=>`<div class="review-item" style="padding:6px 12px;background:var(--pink-50);border-radius:10px;margin-bottom:6px;">${esc(it.text)} <button class="item-btn del" style="display:inline-flex;width:20px;height:20px;font-size:10px;margin-left:8px;" onclick="delReview('${key}','${containerId}',${i})">✕</button></div>`).join('');
+}
+function addReview(containerId,label){
+  const text=prompt('输入'+label+'内容：');if(!text||!text.trim())return;
+  const data=loadData(containerId);
+  data.push({text:text.trim()});
+  saveData(containerId,data);renderReview(containerId,containerId);
+}
+function editReview(key,i){const data=loadData(key);const v=prompt('编辑内容：',data[i].text);if(v!==null&&v.trim()){data[i].text=v.trim();saveData(key,data);renderReview(key,key);}}
+function delReview(key,containerId,i){if(confirm('删除？')){const d=loadData(key);d.splice(i,1);saveData(key,d);renderReview(containerId,containerId);}}
+
+// ====== 菜谱：三餐 ======
+function renderMeal(){
+  const m=loadData('soft_meal');
+  const el=document.getElementById('mealList');
+  if(m.length===0){el.innerHTML='<div style="text-align:center;color:var(--text-dim);font-size:12px;padding:12px 0;">还没有餐食规划 🌸</div>';return;}
+  el.innerHTML=m.map((it,i)=>{
+    const cls=it.meal==='早餐'?'m1':it.meal==='午餐'?'m2':'m3';
+    const tags=(it.tags||'').split(/[,，、\s]+/).filter(Boolean);
+    return `<div class="meal-card ${cls}"><div class="meal-h"><span class="meal-icon">${esc(it.icon||'🍽')}</span><span class="meal-name">${esc(it.meal||'')}</span><span class="meal-time">${esc(it.time||'')}</span></div><div class="meal-tags">${tags.map(t=>`<span class="meal-tag">${esc(t)}</span>`).join('')}</div><div class="item-btns" style="margin-top:8px;"><button class="item-btn edit" onclick="editMeal(${i})">✎ 编辑</button><button class="item-btn del" onclick="delMeal(${i})">✕ 删除</button></div></div>`;
+  }).join('');
+}
+function addMeal(){
+  const meal=prompt('哪一餐？（早餐/午餐/晚餐）：');if(!meal||!meal.trim())return;
+  const time=prompt('时间（如07:30）：')||'';
+  const tags=prompt('菜品（用逗号分隔，如：温牛奶,水煮蛋,面包）：')||'';
+  const icon=meal.includes('早')?'🌅':meal.includes('午')?'☀️':'🌙';
+  const m=loadData('soft_meal');
+  m.push({meal:meal.trim(),time,tags,icon});
+  saveData('soft_meal',m);renderMeal();
+}
+function editMeal(i){const m=loadData('soft_meal');m[i].meal=(prompt('哪一餐？',m[i].meal)||'').trim();m[i].time=(prompt('时间：',m[i].time||'')||'').trim();m[i].tags=(prompt('菜品（逗号分隔）：',m[i].tags||'')||'').trim();saveData('soft_meal',m);renderMeal();}
+function delMeal(i){if(confirm('删除这一餐？')){const m=loadData('soft_meal');m.splice(i,1);saveData('soft_meal',m);renderMeal();}}
+
+// ====== 菜谱：食谱收藏 ======
+function renderRecipe(){
+  const r=loadData('soft_recipe');
+  const el=document.getElementById('recipeList');
+  if(r.length===0){el.innerHTML='<div style="text-align:center;color:var(--text-dim);font-size:12px;padding:12px 0;">还没有收藏食谱 🌸</div>';return;}
+  el.innerHTML=r.map((it,i)=>`<div class="list-item"><div class="list-icon" style="background:${esc(it.color||'#E8F5E9')};">${esc(it.icon||'🍲')}</div><div class="list-body"><div class="list-title">${esc(it.name)}</div><div class="list-desc">${esc(it.desc||'')}</div></div><span class="list-tag" style="background:${esc(it.tagBg||'#E8F5E9')};color:${esc(it.tagColor||'#6DA884')};">${esc(it.cat||'')}</span><div class="item-btns"><button class="item-btn edit" onclick="editRecipe(${i})">✎</button><button class="item-btn del" onclick="delRecipe(${i})">✕</button></div></div>`).join('');
+}
+function addRecipe(){
+  const name=prompt('菜名：');if(!name||!name.trim())return;
+  const desc=prompt('描述（如健脾养胃）：')||'';
+  const cat=prompt('分类（滋补/养胃/家常）：')||'家常';
+  const icon=prompt('图标emoji（可选）：')||'🍲';
+  const r=loadData('soft_recipe');
+  r.push({name:name.trim(),desc:desc.trim(),cat:cat.trim(),icon,color:'#E8F5E9',tagBg:'#E8F5E9',tagColor:'#6DA884'});
+  saveData('soft_recipe',r);renderRecipe();
+}
+function editRecipe(i){const r=loadData('soft_recipe');r[i].name=(prompt('菜名：',r[i].name)||'').trim();r[i].desc=(prompt('描述：',r[i].desc||'')||'').trim();r[i].cat=(prompt('分类：',r[i].cat||'')||'').trim();saveData('soft_recipe',r);renderRecipe();}
+function delRecipe(i){if(confirm('删除这个食谱？')){const r=loadData('soft_recipe');r.splice(i,1);saveData('soft_recipe',r);renderRecipe();}}
 
 function switchBookTab(el,idx){
   el.parentElement.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -843,9 +1076,15 @@ function switchRecipeTab(el){
   el.classList.add('active');
 }
 
-loadTodos();
-renderCal();
-renderTodos();
+// ====== 初始化 ======
+loadTodos();renderCal();renderTodos();
+renderBooks();renderReadStats();renderNotes('bookNotes','bookNotes');renderFav();
+renderSport();renderNotes('sportLog','sportLog','#A8D5BA');
+renderCalli();renderNotes('calliNotes','calliNotes','#F0D78C');renderKnow();
+renderTeach('teachPrep','teachPrep');renderTeach('teachResearch','teachResearch');renderTeach('teachDoc','teachDoc');renderNotes('teachStudent','teachStudent','#A8D5BA');
+renderMemo('memoInsp','memoInsp','pink');renderMemo('memoLife','memoLife','yellow');renderMemo('memoDraft','memoDraft','blue');
+renderReview('reviewDone','reviewDone');renderReview('reviewGain','reviewGain');renderReview('reviewLack','reviewLack');renderReview('reviewPlan','reviewPlan');
+renderMeal();renderRecipe();
 </script>
 </body>
 </html>
