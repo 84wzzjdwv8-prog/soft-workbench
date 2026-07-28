@@ -3,1654 +3,776 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>软糯工作台 · 兔兔的日常</title>
+<title>软糯工作台</title>
 <style>
-/* ====== 色彩系统变量 ====== */
 :root{
-  --bg-cream:#FBF6F0;
-  --bg-soft:#FFF9F4;
-  --pink-50:#FDEEF3;
-  --pink-100:#FBD9E4;
-  --pink-200:#F7BDD0;
-  --pink-300:#F0A0B8;
-  --pink-400:#E87B9C;
-  --yellow-50:#FEF6E0;
-  --yellow-100:#FCEBBE;
-  --yellow-200:#F9E29C;
-  --blue-50:#EAF4FB;
-  --blue-100:#D2EAF7;
-  --blue-200:#B5DAEF;
-  --green-50:#EFF7EE;
-  --green-100:#DDEEDB;
-  --green-200:#C2E2BE;
-  --lavender-50:#F3EFFA;
-  --lavender-100:#E4DBF2;
-  --text-main:#6B5566;
-  --text-light:#9B8A93;
-  --text-dim:#B8AAB2;
-  --white:#FFFFFF;
-  --radius:18px;
-  --radius-sm:12px;
-  --shadow-soft:0 4px 18px rgba(180,140,155,0.12);
-  --shadow-card:0 6px 24px rgba(180,140,155,0.10);
-  --transition:all .3s cubic-bezier(.4,0,.2,1);
+  --bg:#FFF8FA;
+  --bg-card:#FFFFFF;
+  --pink-50:#FFF0F5;
+  --pink-100:#FFD9E8;
+  --pink-200:#FFC0D9;
+  --pink-300:#FF9FC4;
+  --pink-400:#FF7AAA;
+  --pink-500:#F06292;
+  --text-main:#5A4A55;
+  --text-light:#9A8A93;
+  --text-dim:#C4B8BE;
+  --green:#A8D5BA;
+  --green-dark:#6DA884;
+  --yellow:#FCEBBE;
+  --blue:#D2EAF7;
+  --lavender:#E8DFF5;
+  --shadow:0 6px 24px rgba(255,159,196,0.12);
+  --shadow-soft:0 4px 16px rgba(255,159,196,0.10);
+  --radius:22px;
+  --radius-sm:16px;
+  --transition:all .28s cubic-bezier(.4,0,.2,1);
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{
   font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
-  background:linear-gradient(180deg,#FDEEF3 0%,#FBF6F0 30%);
+  background:var(--bg);
   color:var(--text-main);
   -webkit-font-smoothing:antialiased;
   min-height:100vh;
 }
 
-::-webkit-scrollbar{width:6px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:var(--pink-100);border-radius:10px;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--pink-100);border-radius:4px;}
 
-/* ====== 手机端外框 ====== */
 .phone-frame{
   max-width:414px;
   margin:0 auto;
-  background:var(--bg-cream);
-  position:relative;
-  overflow-x:hidden;
   min-height:100vh;
-}
-
-/* ====== 顶部区域 ====== */
-.top-bar{
-  background:linear-gradient(135deg,var(--pink-50) 0%,var(--yellow-50) 50%,var(--blue-50) 100%);
-  padding:18px 20px 22px;
-  border-radius:0 0 28px 28px;
+  background:var(--bg);
   position:relative;
   overflow:hidden;
-  box-shadow:var(--shadow-soft);
-}
-.top-bar::before{
-  content:'';position:absolute;top:-20px;left:-30px;
-  width:90px;height:90px;
-  background:radial-gradient(circle,rgba(247,189,208,0.4) 0%,transparent 70%);
-  border-radius:50%;
-}
-.top-bar::after{
-  content:'';position:absolute;bottom:-15px;right:-20px;
-  width:70px;height:70px;
-  background:radial-gradient(circle,rgba(185,218,239,0.35) 0%,transparent 70%);
-  border-radius:50%;
 }
 
-.top-row{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1;}
-
-.user-block{display:flex;align-items:center;gap:10px;}
-.avatar-bunny{
-  width:46px;height:46px;
-  background:var(--white);
-  border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 3px 10px rgba(232,123,156,0.15);
-  position:relative;
-}
-.avatar-bunny svg{width:36px;height:36px;}
-.user-text .nickname{font-size:17px;font-weight:700;color:var(--text-main);}
-.user-text .subtitle{font-size:11px;color:var(--text-light);margin-top:2px;}
-
-.date-block{text-align:right;}
-.date-block .date{font-size:15px;font-weight:600;color:var(--text-main);}
-.date-block .weekday{font-size:11px;color:var(--text-light);margin-top:2px;}
-
-/* 进度条 */
-.progress-area{
-  margin-top:14px;
+/* 顶部栏 */
+.top-bar{
+  padding:14px 16px 10px;
   display:flex;align-items:center;gap:10px;
-  position:relative;z-index:1;
-}
-.progress-label{font-size:11px;color:var(--text-light);white-space:nowrap;font-weight:600;}
-.progress-bar{
-  flex:1;height:8px;
-  background:var(--white);
-  border-radius:20px;
-  overflow:visible;
-  box-shadow:inset 0 1px 3px rgba(180,140,155,0.1);
   position:relative;
+}
+.user-avatar{
+  width:42px;height:42px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--pink-200),var(--pink-400));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 10px rgba(255,122,170,0.25);
+  flex-shrink:0;
+}
+.user-avatar svg{width:30px;height:30px;}
+.user-info{flex:1;}
+.user-name{font-size:15px;font-weight:700;color:var(--text-main);}
+.user-name .num{font-size:12px;color:var(--text-light);font-weight:500;}
+.date-line{font-size:12px;color:var(--text-light);margin-top:2px;}
+
+.top-right{display:flex;align-items:center;gap:8px;}
+.progress-box{
+  display:flex;align-items:center;gap:6px;
+}
+.progress-num{font-size:18px;font-weight:700;color:var(--pink-400);}
+.progress-bar{
+  width:60px;height:7px;
+  background:var(--pink-50);
+  border-radius:10px;
+  overflow:hidden;
 }
 .progress-fill{
-  height:100%;
-  width:62%;
-  background:linear-gradient(90deg,var(--pink-200),var(--pink-300),var(--pink-400));
-  border-radius:20px;
-  transition:width .6s ease;
-  position:relative;
+  height:100%;width:100%;
+  background:linear-gradient(90deg,var(--pink-300),var(--pink-400));
+  border-radius:10px;
+  transition:width .5s ease;
 }
-.progress-fill::after{
-  content:'';
-  position:absolute;right:-8px;top:-7px;
-  width:22px;height:22px;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><g transform='translate(12,12)'><ellipse cx='-4' cy='0' rx='4' ry='3' fill='%23F7BDD0'/><ellipse cx='4' cy='0' rx='4' ry='3' fill='%23F7BDD0'/><circle cx='-4' cy='-1' r='1.5' fill='%23E87B9C'/><circle cx='4' cy='-1' r='1.5' fill='%23E87B9C'/></g></svg>");
-  background-size:contain;background-repeat:no-repeat;
-  transform:rotate(-15deg);
-}
-.progress-percent{font-size:13px;font-weight:700;color:var(--pink-400);min-width:36px;text-align:right;}
 .btn-reset{
-  width:30px;height:30px;
+  padding:5px 12px;
   border:none;
-  background:var(--white);
-  border-radius:50%;
-  font-size:16px;
+  background:var(--pink-50);
+  color:var(--pink-400);
+  border-radius:14px;
+  font-size:12px;font-weight:600;
   cursor:pointer;
-  box-shadow:0 2px 8px rgba(232,123,156,0.12);
   transition:var(--transition);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--pink-300);font-weight:700;
 }
-.btn-reset:hover{transform:rotate(180deg) scale(1.1);}
+.btn-reset:hover{background:var(--pink-100);}
 
-/* 贴纸装饰 - SVG */
-.sticker-tl{position:absolute;top:-4px;left:-4px;z-index:2;transform:rotate(-12deg);}
-.sticker-tl svg{width:60px;height:60px;}
-.sticker-tr{position:absolute;top:-6px;right:-6px;z-index:2;transform:rotate(15deg);}
-.sticker-tr svg{width:50px;height:50px;}
+/* 贴纸 */
+.bunny-sticker{
+  position:absolute;
+  top:6px;left:186px;
+  font-size:30px;
+  transform:rotate(-8deg);
+  z-index:5;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,0.06));
+}
 
-/* ====== 侧边栏：竖向列表式 ====== */
+/* 左右分栏 */
+.main-layout{
+  display:flex;
+  height:calc(100vh - 80px);
+  padding:0 8px 12px;
+  gap:10px;
+}
+
+/* 左侧边栏 */
 .sidebar{
+  width:72px;
+  flex-shrink:0;
   display:flex;
   flex-direction:column;
-  gap:10px;
-  padding:0 16px;
-  margin-top:14px;
-  margin-bottom:8px;
+  gap:8px;
+  padding:8px 4px;
+  overflow-y:auto;
+  background:rgba(255,255,255,0.5);
+  border-radius:var(--radius);
+  -webkit-overflow-scrolling:touch;
 }
 .sidebar::-webkit-scrollbar{display:none;}
 
 .nav-item{
   display:flex;
+  flex-direction:column;
   align-items:center;
-  gap:14px;
-  padding:14px 16px;
-  background:var(--white);
-  border-radius:var(--radius);
+  gap:4px;
+  padding:8px 4px;
+  border-radius:16px;
   cursor:pointer;
   transition:var(--transition);
-  border:2px solid transparent;
-  position:relative;
-  box-shadow:var(--shadow-card);
 }
-.nav-item:hover{transform:translateY(-2px);}
+.nav-item:hover{background:rgba(255,159,196,0.08);}
 .nav-item.active{
-  background:var(--green-100);
-  border-color:var(--green-200);
-  box-shadow:0 6px 18px rgba(159,203,149,0.22);
+  background:var(--pink-100);
+  box-shadow:0 4px 12px rgba(255,159,196,0.2);
 }
 .nav-icon{
-  width:46px;height:46px;
-  border-radius:16px;
+  width:40px;height:40px;
+  border-radius:14px;
   display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-  box-shadow:0 3px 10px rgba(0,0,0,0.06);
+  font-size:22px;
+  background:var(--bg-card);
+  box-shadow:0 2px 8px rgba(180,140,155,0.08);
 }
-.nav-icon svg{width:26px;height:26px;}
-.nav-text{flex:1;min-width:0;}
-.nav-title{font-size:16px;font-weight:700;color:var(--text-main);transition:var(--transition);}
-.nav-item.active .nav-title{color:#4A6B46;}
-.nav-sub{font-size:12px;color:var(--text-light);margin-top:3px;transition:var(--transition);}
-.nav-item.active .nav-sub{color:#7BAB6E;}
-.nav-badge{
-  width:28px;height:28px;
-  border-radius:50%;
-  background:var(--pink-100);
-  color:var(--pink-400);
-  font-size:13px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-  transition:var(--transition);
+.nav-item.active .nav-icon{
+  background:var(--bg-card);
 }
-.nav-item.active .nav-badge{
-  background:var(--white);
-  color:var(--green-300);
+.nav-label{
+  font-size:10px;
+  font-weight:600;
+  color:var(--text-light);
+  text-align:center;
+  line-height:1.2;
+}
+.nav-item.active .nav-label{color:var(--pink-500);}
+
+/* 右侧内容区 */
+.content-area{
+  flex:1;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding-right:4px;
+  -webkit-overflow-scrolling:touch;
 }
 
-/* ====== 主内容区 ====== */
-.main-content{padding:16px;margin-bottom:30px;}
-
-.panel{display:none;animation:fadeIn .4s ease;}
+.panel{display:none;animation:fadeIn .35s ease;}
 .panel.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 
 /* 卡片通用 */
 .card{
-  background:var(--white);
+  background:var(--bg-card);
   border-radius:var(--radius);
-  padding:18px;
-  margin-bottom:14px;
-  box-shadow:var(--shadow-card);
+  padding:16px;
+  margin-bottom:12px;
+  box-shadow:var(--shadow);
   position:relative;
   overflow:hidden;
 }
 .card-title{
-  font-size:15px;font-weight:700;color:var(--text-main);
+  font-size:16px;font-weight:700;color:var(--text-main);
   margin-bottom:14px;
   display:flex;align-items:center;gap:8px;
 }
-.card-title .icon-badge{
-  width:30px;height:30px;
-  border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
-}
-.card-title .icon-badge svg{width:18px;height:18px;}
-.card-title .count-badge{
+.card-title .tag{
   margin-left:auto;
-  background:var(--pink-100);
+  background:var(--pink-50);
   color:var(--pink-400);
   font-size:12px;font-weight:700;
   padding:3px 10px;
-  border-radius:20px;
+  border-radius:12px;
 }
 
-/* ====== 日历组件 ====== */
-.calendar-wrap{
-  background:var(--pink-50);
-  border-radius:var(--radius-sm);
-  padding:14px;
-  position:relative;
+/* 月历 */
+.calendar-card{position:relative;}
+.cal-sticker{
+  position:absolute;top:-10px;left:-6px;
+  font-size:42px;transform:rotate(-12deg);
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+  z-index:2;
 }
-.calendar-header{
+.cal-header{
   display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:10px;
+  margin-bottom:10px;padding-left:40px;
 }
-.cal-month{font-size:15px;font-weight:700;color:var(--text-main);}
-.cal-nav-btn{
-  width:28px;height:28px;
-  border:none;
-  background:var(--white);
-  border-radius:50%;
-  cursor:pointer;
-  font-size:14px;color:var(--pink-300);
-  transition:var(--transition);
+.cal-month{font-size:17px;font-weight:700;color:var(--text-main);}
+.cal-arrow{
+  width:28px;height:28px;border:none;background:var(--pink-50);
+  border-radius:50%;color:var(--pink-400);font-size:14px;
+  cursor:pointer;transition:var(--transition);
 }
-.cal-nav-btn:hover{background:var(--pink-100);}
+.cal-arrow:hover{background:var(--pink-100);}
 .cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px;}
-.cal-weekdays span{text-align:center;font-size:10px;color:var(--text-dim);font-weight:600;padding:4px 0;}
+.cal-weekdays span{text-align:center;font-size:11px;color:var(--text-dim);font-weight:600;padding:4px 0;}
 .cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
 .cal-day{
   aspect-ratio:1;
   display:flex;align-items:center;justify-content:center;
-  font-size:12px;color:var(--text-main);
-  border-radius:10px;
-  cursor:pointer;
-  transition:var(--transition);
-  position:relative;
-  font-weight:500;
+  font-size:13px;color:var(--text-main);
+  border-radius:12px;cursor:pointer;transition:var(--transition);
+  position:relative;font-weight:500;
 }
-.cal-day:hover{background:var(--pink-100);}
-.cal-day.other-month{color:var(--text-dim);opacity:0.4;}
-.cal-day.today{
-  background:var(--yellow-100);
-  font-weight:700;color:var(--text-main);
-}
+.cal-day:hover{background:var(--pink-50);}
+.cal-day.other{color:var(--text-dim);opacity:0.4;}
+.cal-day.today{background:var(--yellow);font-weight:700;}
 .cal-day.selected{
-  background:linear-gradient(135deg,var(--pink-200),var(--pink-300));
-  color:var(--white);font-weight:700;
-  box-shadow:0 3px 10px rgba(240,160,184,0.3);
+  background:linear-gradient(135deg,var(--pink-300),var(--pink-400));
+  color:#fff;font-weight:700;
+  box-shadow:0 4px 12px rgba(255,122,170,0.35);
 }
 .cal-day.selected::after{
-  content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);
-  width:4px;height:4px;background:var(--white);border-radius:50%;
+  content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);
+  width:4px;height:4px;background:#fff;border-radius:50%;
 }
-.cal-day.has-task::before{
-  content:'';position:absolute;top:3px;right:3px;
+.cal-day.dot::before{
+  content:'';position:absolute;top:4px;right:4px;
   width:5px;height:5px;background:var(--pink-300);border-radius:50%;
 }
-.calendar-sticker{position:absolute;z-index:1;}
-.calendar-sticker.tl{top:-12px;left:-12px;transform:rotate(-15deg);}
-.calendar-sticker.tl svg{width:36px;height:36px;}
-.calendar-sticker.br{bottom:-12px;right:-12px;transform:rotate(15deg);}
-.calendar-sticker.br svg{width:32px;height:32px;}
 
-/* ====== 待办清单 ====== */
-.todo-input-row{display:flex;gap:8px;margin-bottom:12px;}
-.todo-input{
-  flex:1;
-  border:2px solid var(--pink-100);
-  border-radius:14px;
-  padding:10px 14px;
-  font-size:13px;
-  background:var(--pink-50);
-  color:var(--text-main);
-  outline:none;
-  transition:var(--transition);
-  font-family:inherit;
-}
-.todo-input:focus{border-color:var(--pink-200);background:var(--white);}
-.todo-add-btn{
-  width:40px;height:40px;
-  border:none;
-  background:linear-gradient(135deg,var(--pink-200),var(--pink-300));
-  border-radius:14px;
-  color:var(--white);font-size:18px;font-weight:700;
-  cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:var(--transition);
-  box-shadow:0 3px 10px rgba(240,160,184,0.3);
-}
-.todo-add-btn:hover{transform:scale(1.08) rotate(90deg);}
-
-.todo-list{max-height:240px;overflow-y:auto;}
+/* 待办 */
+.todo-list{margin-bottom:10px;}
 .todo-item{
   display:flex;align-items:center;gap:10px;
-  padding:10px 12px;
-  background:var(--bg-soft);
-  border-radius:12px;
+  padding:12px 14px;
+  background:var(--pink-50);
+  border-radius:var(--radius-sm);
   margin-bottom:8px;
   transition:var(--transition);
 }
-.todo-item:hover{background:var(--pink-50);}
-.todo-checkbox{
-  width:22px;height:22px;
-  border:2px solid var(--pink-200);
+.todo-item.done{opacity:0.7;}
+.todo-check{
+  width:24px;height:24px;
   border-radius:8px;
-  cursor:pointer;
-  flex-shrink:0;
+  background:var(--bg-card);
+  border:2px solid var(--pink-200);
   display:flex;align-items:center;justify-content:center;
-  color:var(--white);
-  transition:var(--transition);
+  cursor:pointer;flex-shrink:0;transition:var(--transition);
 }
-.todo-checkbox.checked{
-  background:var(--pink-300);
-  border-color:var(--pink-300);
+.todo-check.checked{
+  background:var(--pink-400);border-color:var(--pink-400);
 }
-.todo-checkbox svg{width:12px;height:12px;display:none;}
-.todo-checkbox.checked svg{display:block;}
-.todo-text{font-size:13px;color:var(--text-main);transition:var(--transition);line-height:1.5;}
+.todo-check svg{width:14px;height:14px;display:none;}
+.todo-check.checked svg{display:block;}
+.todo-text{flex:1;font-size:14px;color:var(--text-main);transition:var(--transition);}
 .todo-item.done .todo-text{text-decoration:line-through;color:var(--text-dim);}
-.todo-delete{
-  margin-left:auto;
-  width:22px;height:22px;
-  border:none;background:transparent;
-  font-size:14px;color:var(--text-dim);
-  cursor:pointer;border-radius:6px;
+.todo-del{
+  width:22px;height:22px;border:none;background:transparent;
+  color:var(--text-dim);cursor:pointer;border-radius:6px;
   opacity:0;transition:var(--transition);
 }
-.todo-item:hover .todo-delete{opacity:1;}
-.todo-delete:hover{color:var(--pink-400);background:var(--pink-50);}
+.todo-item:hover .todo-del{opacity:1;}
+.todo-del:hover{color:var(--pink-400);background:var(--pink-100);}
 
-/* ====== Tab 切换组件 ====== */
-.tab-bar{
-  display:flex;gap:6px;
-  overflow-x:auto;
-  padding:4px;
-  background:var(--bg-soft);
-  border-radius:14px;
-  margin-bottom:14px;
-  scrollbar-width:none;
-}
-.tab-bar::-webkit-scrollbar{display:none;}
-.tab-btn{
-  flex-shrink:0;
-  padding:8px 14px;
-  border:none;background:transparent;
-  border-radius:10px;
-  font-size:12px;font-weight:600;color:var(--text-light);
-  cursor:pointer;transition:var(--transition);
+.todo-add-row{display:flex;gap:8px;}
+.todo-input{
+  flex:1;border:2px solid var(--pink-100);border-radius:var(--radius-sm);
+  padding:11px 14px;font-size:13px;background:var(--pink-50);
+  color:var(--text-main);outline:none;transition:var(--transition);
   font-family:inherit;
 }
-.tab-btn:hover{color:var(--pink-300);}
-.tab-btn.active{
-  background:var(--white);
-  color:var(--pink-400);
-  box-shadow:0 2px 8px rgba(180,140,155,0.1);
-}
-.tab-panel{display:none;animation:fadeIn .3s ease;}
-.tab-panel.active{display:block;}
-
-/* ====== 读书板块 ====== */
-.book-status-tabs{display:flex;gap:8px;margin-bottom:12px;}
-.book-status-tab{
-  flex:1;
-  padding:8px;
-  text-align:center;
-  border-radius:12px;
-  font-size:12px;font-weight:600;
+.todo-input:focus{border-color:var(--pink-200);background:var(--bg-card);}
+.todo-add{
+  padding:0 18px;border:none;background:linear-gradient(135deg,var(--pink-300),var(--pink-400));
+  color:#fff;border-radius:var(--radius-sm);font-size:14px;font-weight:600;
   cursor:pointer;transition:var(--transition);
-  border:2px solid transparent;
+  box-shadow:0 3px 10px rgba(255,122,170,0.25);
 }
-.book-status-tab.to-read{background:var(--blue-50);color:var(--text-main);}
-.book-status-tab.read{background:var(--green-50);color:var(--text-main);}
-.book-status-tab.active{border-color:var(--pink-300);box-shadow:0 2px 8px rgba(240,160,184,0.15);}
+.todo-add:hover{transform:scale(1.02);}
 
-.book-item{
-  display:flex;gap:12px;
-  padding:10px;
-  background:var(--bg-soft);
-  border-radius:12px;
-  margin-bottom:8px;
-  align-items:center;
-}
-.book-cover{
-  width:40px;height:54px;
-  border-radius:6px;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-  color:#fff;font-weight:700;font-size:14px;
-  font-family:Georgia,serif;
-  box-shadow:0 2px 6px rgba(0,0,0,0.08);
-}
-.book-info{flex:1;}
-.book-title{font-size:13px;font-weight:600;color:var(--text-main);}
-.book-meta{font-size:11px;color:var(--text-light);margin-top:2px;}
-.book-tag{font-size:10px;padding:2px 8px;border-radius:8px;font-weight:600;}
-
-/* 阅读打卡 */
-.reading-stats{display:flex;gap:10px;margin-bottom:14px;}
-.stat-pill{
-  flex:1;
-  background:var(--yellow-50);
-  border-radius:14px;
-  padding:12px;
-  text-align:center;
-}
-.stat-pill .num{font-size:22px;font-weight:700;color:var(--text-main);}
-.stat-pill .label{font-size:10px;color:var(--text-light);margin-top:2px;}
-
-/* 读书笔记 */
-.note-item{
-  background:var(--lavender-50);
-  border-radius:12px;
-  padding:12px;
-  margin-bottom:8px;
-  border-left:3px solid var(--lavender-100);
-}
-.note-item .quote{font-size:13px;color:var(--text-main);line-height:1.6;font-style:italic;}
-.note-item .source{font-size:11px;color:var(--text-light);margin-top:6px;}
-.note-tag{
-  display:inline-block;
-  font-size:10px;
-  padding:2px 8px;
-  border-radius:8px;
-  margin-right:4px;
-  margin-top:6px;
-  font-weight:600;
-}
-
-/* ====== 运动板块 ====== */
-.exercise-log-item{
+/* 通用列表项 */
+.list-item{
   display:flex;align-items:center;gap:12px;
   padding:12px;
-  background:var(--green-50);
-  border-radius:14px;
+  background:var(--pink-50);
+  border-radius:var(--radius-sm);
   margin-bottom:8px;
 }
-.ex-icon{
-  width:40px;height:40px;
-  border-radius:12px;
-  background:var(--white);
+.list-icon{
+  width:38px;height:38px;border-radius:12px;
   display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-  font-size:20px;
-  box-shadow:0 2px 6px rgba(180,140,155,0.08);
-}
-.ex-type{font-size:13px;font-weight:600;color:var(--text-main);}
-.ex-duration{font-size:11px;color:var(--text-light);margin-top:2px;}
-.ex-feel{margin-left:auto;font-size:12px;background:var(--white);padding:4px 10px;border-radius:10px;}
-
-/* 每周统计柱状图 */
-.week-chart{display:flex;align-items:flex-end;gap:6px;height:100px;padding:10px 0;}
-.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;justify-content:flex-end;}
-.bar{
-  width:100%;
-  background:linear-gradient(180deg,var(--pink-200),var(--pink-100));
-  border-radius:6px 6px 0 0;
-  min-height:6px;
-  transition:height .5s ease;
-}
-.bar-col .day-label{font-size:10px;color:var(--text-light);font-weight:600;}
-
-/* ====== 学习板块 ====== */
-.calli-record{
-  background:var(--yellow-50);
-  border-radius:12px;
-  padding:12px;
-  margin-bottom:8px;
-  display:flex;align-items:center;gap:10px;
-}
-.calli-time{font-size:22px;font-weight:700;color:var(--text-main);}
-.calli-label{font-size:11px;color:var(--text-light);}
-
-.knowledge-card{
-  background:var(--blue-50);
-  border-radius:12px;
-  padding:12px;
-  margin-bottom:8px;
-  border-left:3px solid var(--blue-100);
-}
-.knowledge-card .content{font-size:13px;color:var(--text-main);line-height:1.6;}
-.knowledge-card .category{font-size:10px;color:var(--text-light);margin-top:6px;font-weight:600;}
-
-/* ====== 教学板块 ====== */
-.teach-folder{
-  display:flex;align-items:center;gap:10px;
-  padding:12px;
-  background:var(--bg-soft);
-  border-radius:14px;
-  margin-bottom:8px;
-  cursor:pointer;
-  transition:var(--transition);
-}
-.teach-folder:hover{background:var(--pink-50);transform:translateX(4px);}
-.folder-icon{
-  width:36px;height:36px;
-  border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;font-weight:700;color:#fff;
+  font-size:18px;background:var(--bg-card);
   flex-shrink:0;
 }
-.folder-name{font-size:13px;font-weight:600;color:var(--text-main);}
-.folder-desc{font-size:11px;color:var(--text-light);margin-top:2px;}
-.folder-count{
-  margin-left:auto;
-  font-size:11px;color:var(--text-dim);
-  background:var(--white);
-  padding:3px 8px;border-radius:8px;font-weight:600;
+.list-body{flex:1;}
+.list-title{font-size:14px;font-weight:600;color:var(--text-main);}
+.list-desc{font-size:11px;color:var(--text-light);margin-top:2px;}
+.list-tag{
+  padding:3px 10px;border-radius:10px;
+  font-size:10px;font-weight:700;
 }
 
-/* ====== 备忘录板块 ====== */
+/* 统计pill */
+.stat-row{display:flex;gap:8px;margin-bottom:14px;}
+.stat-pill{
+  flex:1;text-align:center;padding:12px 8px;
+  border-radius:var(--radius-sm);background:var(--pink-50);
+}
+.stat-pill .n{font-size:20px;font-weight:700;color:var(--text-main);}
+.stat-pill .l{font-size:10px;color:var(--text-light);margin-top:2px;}
+
+/* tab */
+.tab-row{display:flex;gap:6px;margin-bottom:12px;}
+.tab-btn{
+  flex:1;padding:8px;border:none;border-radius:12px;
+  background:var(--pink-50);color:var(--text-light);
+  font-size:12px;font-weight:600;cursor:pointer;
+  transition:var(--transition);font-family:inherit;
+}
+.tab-btn.active{background:var(--pink-300);color:#fff;}
+
+/* 笔记卡片 */
+.note-card{
+  background:var(--pink-50);
+  border-radius:var(--radius-sm);
+  padding:12px;margin-bottom:8px;
+  border-left:3px solid var(--pink-200);
+}
+.note-card .q{font-size:13px;color:var(--text-main);line-height:1.6;font-style:italic;}
+.note-card .s{font-size:11px;color:var(--text-light);margin-top:6px;}
+
+/* 备忘 */
 .memo-card{
-  background:var(--bg-soft);
-  border-radius:14px;
-  padding:12px;
-  margin-bottom:8px;
-  position:relative;
+  background:var(--pink-50);border-radius:var(--radius-sm);
+  padding:12px;margin-bottom:8px;position:relative;
 }
-.memo-card.inspiration{border-left:3px solid var(--pink-200);}
-.memo-card.life{border-left:3px solid var(--yellow-200);}
-.memo-card.draft{border-left:3px solid var(--blue-100);}
+.memo-card.pink{border-left:3px solid var(--pink-200);}
+.memo-card.yellow{border-left:3px solid #F0D78C;}
+.memo-card.blue{border-left:3px solid #A8D0E6;}
 .memo-text{font-size:13px;color:var(--text-main);line-height:1.6;}
 .memo-time{font-size:10px;color:var(--text-dim);margin-top:6px;}
 .memo-edit{
-  position:absolute;top:8px;right:8px;
-  width:24px;height:24px;
-  border:none;background:transparent;
-  font-size:11px;color:var(--text-dim);cursor:pointer;border-radius:6px;
-  opacity:0;transition:var(--transition);
+  position:absolute;top:8px;right:8px;width:24px;height:24px;
+  border:none;background:transparent;color:var(--text-dim);cursor:pointer;
+  font-size:11px;opacity:0;transition:var(--transition);
 }
 .memo-card:hover .memo-edit{opacity:1;}
 
-/* ====== 每日复盘板块 ====== */
-.review-section{margin-bottom:14px;}
-.review-label{
-  font-size:12px;font-weight:700;color:var(--text-main);
-  margin-bottom:6px;
-  display:flex;align-items:center;gap:6px;
+/* 运动柱状图 */
+.week-chart{display:flex;align-items:flex-end;gap:5px;height:90px;padding:8px 0;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;justify-content:flex-end;}
+.bar{
+  width:100%;border-radius:6px 6px 0 0;
+  background:linear-gradient(180deg,var(--pink-300),var(--pink-100));
+  min-height:4px;transition:height .5s ease;
 }
-.review-content{
-  background:var(--bg-soft);
-  border-radius:12px;
-  padding:10px 12px;
-  font-size:13px;color:var(--text-main);line-height:1.6;
-  min-height:36px;
-}
-.review-item{
-  display:flex;align-items:flex-start;gap:6px;
-  font-size:13px;color:var(--text-main);
-  padding:4px 0;
-  line-height:1.5;
-}
-.review-item::before{
-  content:'';width:5px;height:5px;background:var(--pink-300);border-radius:50%;margin-top:8px;flex-shrink:0;
-}
+.bar-col .d{font-size:9px;color:var(--text-light);font-weight:600;}
 
-.archive-strip{display:flex;gap:6px;overflow-x:auto;padding:4px 0;scrollbar-width:none;}
-.archive-strip::-webkit-scrollbar{display:none;}
-.archive-chip{
-  flex-shrink:0;
-  padding:6px 12px;
-  background:var(--pink-50);
-  border-radius:10px;
-  font-size:11px;font-weight:600;color:var(--text-light);
-  cursor:pointer;transition:var(--transition);
-  border:2px solid transparent;
-}
-.archive-chip:hover{background:var(--pink-100);}
-.archive-chip.active{background:var(--pink-200);color:var(--white);}
-
-/* ====== 菜谱板块 ====== */
-.meal-card{
-  border-radius:14px;
-  padding:14px;
-  margin-bottom:10px;
-  position:relative;
-}
-.meal-card.breakfast{background:var(--yellow-50);}
-.meal-card.lunch{background:var(--green-50);}
-.meal-card.dinner{background:var(--blue-50);}
-.meal-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.meal-icon{font-size:20px;}
-.meal-title{font-size:14px;font-weight:700;color:var(--text-main);}
+/* 菜谱 */
+.meal-card{border-radius:var(--radius-sm);padding:14px;margin-bottom:10px;}
+.meal-card.m1{background:#FFF9E6;}
+.meal-card.m2{background:#F0FAEC;}
+.meal-card.m3{background:#EAF6FC;}
+.meal-h{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.meal-icon{font-size:22px;}
+.meal-name{font-size:14px;font-weight:700;color:var(--text-main);}
 .meal-time{margin-left:auto;font-size:11px;color:var(--text-light);}
-.meal-items{display:flex;flex-wrap:wrap;gap:6px;}
-.meal-tag{
-  background:var(--white);
-  padding:4px 10px;
-  border-radius:10px;
-  font-size:11px;color:var(--text-main);font-weight:600;
-}
-
-.recipe-cat{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
-.recipe-cat-btn{
-  padding:6px 12px;
-  border-radius:10px;
-  font-size:11px;font-weight:600;
-  cursor:pointer;transition:var(--transition);
-  border:2px solid transparent;
-  font-family:inherit;
-}
-.recipe-cat-btn.active{background:var(--pink-200);color:var(--white);}
-.recipe-cat-btn:not(.active){background:var(--bg-soft);color:var(--text-light);}
-
-.recipe-item{
-  display:flex;align-items:center;gap:10px;
-  padding:10px;
-  background:var(--bg-soft);
-  border-radius:12px;
-  margin-bottom:6px;
-}
-.recipe-emoji{font-size:24px;width:32px;text-align:center;}
-.recipe-name{font-size:13px;font-weight:600;color:var(--text-main);}
-.recipe-desc{font-size:11px;color:var(--text-light);margin-top:2px;}
-
-/* 底部装饰 */
-.bottom-spacer{height:60px;position:relative;}
-.bottom-spacer .deco{position:absolute;opacity:0.6;}
-.bottom-spacer .deco:nth-child(1){left:20px;top:10px;transform:rotate(-10deg);}
-.bottom-spacer .deco:nth-child(2){right:30px;top:20px;transform:rotate(15deg);}
-.bottom-spacer .deco:nth-child(3){left:50%;top:5px;transform:translateX(-50%) rotate(-5deg);}
-.bottom-spacer svg{width:24px;height:24px;}
+.meal-tags{display:flex;flex-wrap:wrap;gap:5px;}
+.meal-tag{background:#fff;padding:4px 10px;border-radius:10px;font-size:11px;color:var(--text-main);font-weight:600;}
 
 /* 漂浮装饰 */
-.float-deco{position:fixed;z-index:0;opacity:0.4;pointer-events:none;}
-.float-deco.f1{top:30%;left:8px;animation:floatY 6s ease-in-out infinite;}
-.float-deco.f2{top:55%;right:6px;animation:floatY 7s ease-in-out infinite 1s;}
-.float-deco.f3{top:75%;left:10px;animation:floatY 5s ease-in-out infinite 0.5s;}
-.float-deco svg{width:24px;height:24px;}
-@keyframes floatY{0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-12px) rotate(5deg);}}
+.deco-float{position:fixed;font-size:18px;opacity:0.35;pointer-events:none;z-index:0;}
+.deco-float.a{top:20%;left:6px;animation:floatY 5s ease-in-out infinite;}
+.deco-float.b{top:50%;right:6px;animation:floatY 6s ease-in-out infinite 1s;}
+.deco-float.c{top:78%;left:8px;animation:floatY 4s ease-in-out infinite .5s;}
+@keyframes floatY{0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-10px) rotate(5deg);}}
 
-/* 分层标注标签 */
-.layer-tag{
-  position:absolute;
-  top:8px;right:8px;
-  background:var(--pink-50);
-  color:var(--pink-400);
-  font-size:9px;font-weight:700;
-  padding:2px 8px;
-  border-radius:6px;
-  z-index:5;
-  letter-spacing:0.5px;
-  opacity:0.7;
-}
+/* 复盘 */
+.review-label{font-size:12px;font-weight:700;color:var(--text-main);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.review-box{background:var(--pink-50);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--text-main);line-height:1.6;}
+.review-item{display:flex;gap:6px;padding:3px 0;line-height:1.5;font-size:13px;}
+.review-item::before{content:'';width:5px;height:5px;background:var(--pink-300);border-radius:50%;margin-top:7px;flex-shrink:0;}
+.archive-row{display:flex;gap:6px;overflow-x:auto;padding:4px 0;scrollbar-width:none;}
+.archive-row::-webkit-scrollbar{display:none;}
+.archive-chip{flex-shrink:0;padding:5px 11px;background:var(--pink-50);border-radius:10px;font-size:11px;font-weight:600;color:var(--text-light);cursor:pointer;transition:var(--transition);}
+.archive-chip.active{background:var(--pink-300);color:#fff;}
 
-/* 板块指示器 */
-.section-indicator{
-  display:flex;justify-content:center;gap:6px;
-  padding:10px 0;
-}
-.section-indicator .dot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--pink-100);
-  transition:var(--transition);
-}
-.section-indicator .dot.active{background:var(--pink-300);width:18px;border-radius:3px;}
+/* 底部小字 */
+.footer-text{text-align:center;padding:20px 0 10px;font-size:11px;color:var(--text-dim);}
 
-/* 小图标的emoji替代 - 用纯文字标签更稳定 */
-.icon-text{
-  display:inline-flex;
-  align-items:center;justify-content:center;
-  font-weight:700;
-  font-size:14px;
-  color:#fff;
-}
-
+/* 小图标的emoji */
+.ico{font-size:20px;}
 </style>
 </head>
 <body>
 
-<!-- 漂浮装饰 -->
-<div class="float-deco f1">
-  <svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 9c0 4 3 8 7 13 4-5 7-9 7-13 0-4-3-7-7-7z" fill="#9FCB95" opacity="0.6"/><path d="M12 7c-1.5 0-2.5 1-2.5 2.5" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
-</div>
-<div class="float-deco f2">
-  <svg viewBox="0 0 24 24"><g transform="translate(12,12)"><circle cx="0" cy="-3" r="3" fill="#F7BDD0"/><circle cx="3" cy="0" r="3" fill="#F7BDD0"/><circle cx="0" cy="3" r="3" fill="#F7BDD0"/><circle cx="-3" cy="0" r="3" fill="#F7BDD0"/><circle cx="0" cy="0" r="1.5" fill="#F9E29C"/></g></svg>
-</div>
-<div class="float-deco f3">
-  <svg viewBox="0 0 24 24"><path d="M5 16 Q12 8 19 16 Q12 13 5 16z" fill="#D2EAF7" opacity="0.7"/></svg>
-</div>
+<div class="deco-float a">🌸</div>
+<div class="deco-float b">🌿</div>
+<div class="deco-float c">☁️</div>
 
 <div class="phone-frame">
 
-  <!-- ====== 顶部区域 ====== -->
+  <!-- 顶部 -->
   <div class="top-bar">
-    <!-- 兔子爱心贴纸 左上 -->
-    <span class="sticker-tl">
-      <svg viewBox="0 0 80 80">
-        <!-- 兔子 -->
-        <g transform="translate(40,40)">
-          <!-- 耳朵 -->
-          <ellipse cx="-8" cy="-15" rx="3" ry="10" fill="#FFFFFF"/>
-          <ellipse cx="8" cy="-15" rx="3" ry="10" fill="#FFFFFF"/>
-          <ellipse cx="-8" cy="-15" rx="1.5" ry="7" fill="#FBD9E4"/>
-          <ellipse cx="8" cy="-15" rx="1.5" ry="7" fill="#FBD9E4"/>
-          <!-- 头 -->
-          <circle cx="0" cy="0" r="14" fill="#FFFFFF"/>
-          <!-- 腮红 -->
-          <circle cx="-8" cy="3" r="3" fill="#FDEEF3"/>
-          <circle cx="8" cy="3" r="3" fill="#FDEEF3"/>
-          <!-- 眼睛 -->
-          <circle cx="-4" cy="-2" r="1.5" fill="#6B5566"/>
-          <circle cx="4" cy="-2" r="1.5" fill="#6B5566"/>
-          <!-- 鼻子嘴 -->
-          <path d="M0 2 L-1.5 4 L1.5 4 Z" fill="#F0A0B8"/>
-          <path d="M0 4 Q-2 6 -3 5 M0 4 Q2 6 3 5" stroke="#6B5566" stroke-width="1" fill="none"/>
-        </g>
-        <!-- 爱心 -->
-        <g transform="translate(20,18)">
-          <path d="M0 3 C-3 -2 -7 0 -7 4 C-7 8 0 12 0 12 C0 12 7 8 7 4 C7 0 3 -2 0 3z" fill="#E87B9C"/>
-        </g>
-      </svg>
-    </span>
-    <!-- 花朵贴纸 右上 -->
-    <span class="sticker-tr">
-      <svg viewBox="0 0 60 60">
-        <g transform="translate(30,30)">
-          <ellipse cx="0" cy="-10" rx="6" ry="9" fill="#F7BDD0"/>
-          <ellipse cx="9" cy="-3" rx="9" ry="6" fill="#F7BDD0" transform="rotate(72 9 -3)"/>
-          <ellipse cx="6" cy="8" rx="6" ry="9" fill="#F7BDD0" transform="rotate(144 6 8)"/>
-          <ellipse cx="-6" cy="8" rx="6" ry="9" fill="#F7BDD0" transform="rotate(-144 -6 8)"/>
-          <ellipse cx="-9" cy="-3" rx="9" ry="6" fill="#F7BDD0" transform="rotate(-72 -9 -3)"/>
-          <circle cx="0" cy="0" r="6" fill="#F9E29C"/>
-          <circle cx="0" cy="0" r="3" fill="#FCEBBE"/>
-        </g>
-        <!-- 叶子 -->
-        <ellipse cx="12" cy="48" rx="4" ry="6" fill="#9FCB95" transform="rotate(30 12 48)"/>
-      </svg>
-    </span>
-
-    <div class="top-row">
-      <div class="user-block">
-        <div class="avatar-bunny">
-          <svg viewBox="0 0 40 40">
-            <ellipse cx="13" cy="10" rx="3" ry="8" fill="#FFFFFF"/>
-            <ellipse cx="27" cy="10" rx="3" ry="8" fill="#FFFFFF"/>
-            <ellipse cx="13" cy="10" rx="1.5" ry="5" fill="#FBD9E4"/>
-            <ellipse cx="27" cy="10" rx="1.5" ry="5" fill="#FBD9E4"/>
-            <circle cx="20" cy="22" r="13" fill="#FFFFFF"/>
-            <circle cx="14" cy="25" r="2.5" fill="#FDEEF3"/>
-            <circle cx="26" cy="25" r="2.5" fill="#FDEEF3"/>
-            <circle cx="16" cy="20" r="1.5" fill="#6B5566"/>
-            <circle cx="24" cy="20" r="1.5" fill="#6B5566"/>
-            <path d="M20 24 L18.5 26 L21.5 26 Z" fill="#F0A0B8"/>
-            <path d="M20 26 Q18 28 17 27 M20 26 Q22 28 23 27" stroke="#6B5566" stroke-width="1" fill="none"/>
-          </svg>
-        </div>
-        <div class="user-text">
-          <div class="nickname">小兔叽</div>
-          <div class="subtitle">软糯工作台 · 今日也要加油鸭</div>
-        </div>
-      </div>
-      <div class="date-block">
-        <div class="date">7月28日</div>
-        <div class="weekday">星期二</div>
-      </div>
+    <span class="bunny-sticker">🐰💕</span>
+    <div class="user-avatar">
+      <svg viewBox="0 0 40 40"><ellipse cx="13" cy="10" rx="3" ry="8" fill="#fff"/><ellipse cx="27" cy="10" rx="3" ry="8" fill="#fff"/><ellipse cx="13" cy="10" rx="1.5" ry="5" fill="#FFD9E8"/><ellipse cx="27" cy="10" rx="1.5" ry="5" fill="#FFD9E8"/><circle cx="20" cy="22" r="13" fill="#fff"/><circle cx="14" cy="25" r="2.5" fill="#FFF0F5"/><circle cx="26" cy="25" r="2.5" fill="#FFF0F5"/><circle cx="16" cy="20" r="1.5" fill="#5A4A55"/><circle cx="24" cy="20" r="1.5" fill="#5A4A55"/><path d="M20 24 L18.5 26 L21.5 26 Z" fill="#FF9FC4"/><path d="M20 26 Q18 28 17 27 M20 26 Q22 28 23 27" stroke="#5A4A55" stroke-width="1" fill="none"/></svg>
     </div>
-
-    <div class="progress-area">
-      <span class="progress-label">今日进度</span>
-      <div class="progress-bar"><div class="progress-fill"></div></div>
-      <span class="progress-percent">62%</span>
-      <button class="btn-reset" onclick="resetProgress()" title="重置进度">↻</button>
+    <div class="user-info">
+      <div class="user-name">小兔叽的工作台 <span class="num">1/1</span></div>
+      <div class="date-line">2026年7月28日 星期二</div>
+    </div>
+    <div class="top-right">
+      <div class="progress-box">
+        <span class="progress-num" id="progressNum">80%</span>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:80%"></div></div>
+      </div>
+      <button class="btn-reset" onclick="resetAll()">重置</button>
     </div>
   </div>
 
-  <!-- ====== 侧边栏 ====== -->
-  <nav class="sidebar">
-    <div class="nav-item active" data-panel="plan" onclick="switchPanel('plan',this)">
-      <div class="nav-icon" style="background:linear-gradient(135deg,#F7BDD0,#F0A0B8);">
-        <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3" fill="#fff"/><rect x="4" y="5" width="16" height="4" fill="#F0A0B8"/><line x1="8" y1="13" x2="16" y2="13" stroke="#F0A0B8" stroke-width="1.5"/><line x1="8" y1="16" x2="14" y2="16" stroke="#F0A0B8" stroke-width="1.5"/></svg>
-      </div>
-      <div class="nav-text">
-        <div class="nav-title">每日计划</div>
-        <div class="nav-sub">日历 · 待办清单</div>
-      </div>
-      <div class="nav-badge">1</div>
-    </div>
-    <div class="nav-item" data-panel="read" onclick="switchPanel('read',this)">
-      <div class="nav-icon" style="background:linear-gradient(135deg,#B5DAEF,#8FC5E8);">
-        <svg viewBox="0 0 24 24"><path d="M5 4 L11 4 L12 5 L12 20 L5 20 Z" fill="#fff" stroke="#8FC5E8" stroke-width="1"/><path d="M19 4 L13 4 L12 5 L12 20 L19 20 Z" fill="#fff" stroke="#8FC5E8" stroke-width="1"/><line x1="14" y1="9" x2="17" y2="9" stroke="#8FC5E8" stroke-width="1"/></svg>
-      </div>
-      <div class="nav-text">
-        <div class="nav-title">读书</div>
-        <div class="nav-sub">书单 · 打卡 · 笔记</div>
-      </div>
-      <div class="nav-badge">2</div>
-    </div>
-    <div class="nav-item" data-panel="sport" onclick="switchPanel('sport',this)">
-      <div class="nav-icon" style="background:linear-gradient(135deg,#9FCB95,#7BAB6E);">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="6" r="3" fill="#fff"/><path d="M9 9 L8 14 L10 14 L9 19 L11 19 L12 14 L13 19 L15 19 L14 14 L16 14 L15 9" fill="#fff"/></svg>
-      </div>
-      <div class="nav-text">
-        <div class="nav-title">运动</div>
-        <div class="nav-sub">打卡 · 日志 · 统计</div>
-      </div>
-      <div class="nav-badge">3</div>
-    </div>
-    <div class="nav-item" data-panel="study" onclick="switchPanel('study',this)">
-      <div class="nav-icon" style="background:linear-gradient(135deg,#FCEBBE,#F9E29C);">
-        <svg viewBox="0 0 24 24"><path d="M5 18 L15 6 L18 9 L8 21 Z" fill="#fff"/><line x1="14" y1="7" x2="17" y2="10" stroke="#fff" stroke-width="1.5"/></svg>
-      </div>
-      <div class="nav-text">
-        <div class="nav-title">学习</div>
-        <div class="nav-sub">练字 · 心得 · 积累</div>
-      </div>
-      <div class="nav-badge">4</div>
-    </div>
-    <div class="nav-item" data-panel="teach" onclick="switchPanel('teach',this)">
-      <div class="nav-icon" style="background:linear-gradient(135deg,#F7BDD0,#F0A0B8);">
-        <svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="16" rx="3" fill="#fff"/><path d="M8 9 L8 18 M12 9 L12 18 M16 9 L16 18" stroke="#F0A0B8" stroke-width="1.5"/></svg>
-      </div>
-      <div class="nav-text">
-        <div class="nav-title">教学</div>
-        <div class="nav-sub">备课 · 教研 · 文稿</div>
-      </div>
-      <div class="nav-badge">5</div>
-    </div>
-    <div class="nav-item" data-panel="memo" onclick="switchPanel('memo',this)">
-      <div class="nav-icon" style="background:linear-gradient(135deg,#FCEBBE,#F9E29C);">
-        <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2" fill="#fff"/><line x1="8" y1="8" x2="16" y2="8" stroke="#F9E29C" stroke-width="1.5"/><line x1="8" y1="12" x2="16" y2="12" stroke="#F9E29C" stroke-width="1.5"/><line x1="8" y1="16" x2="13" y2="16" stroke="#F9E29C" stroke-width="1.5"/></svg>
-      </div>
-      <div class="nav-text">
-        <div class="nav-title">备忘录</div>
-        <div class="nav-sub">灵感 · 生活 · 草稿</div>
-      </div>
-      <div class="nav-badge">6</div>
-    </div>
-    <div class="nav-item" data-panel="review" onclick="switchPanel('review',this)">
-      <div class="nav-icon" style="background:linear-gradient(135deg,#D4C4ED,#BFB0E0);">
-        <svg viewBox="0 0 24 24"><path d="M19 14 A9 9 0 1 1 12 5 V1 L17 5 L12 9 V5 A7 7 0 1 0 17 14" fill="#fff"/><circle cx="12" cy="14" r="1.5" fill="#BFB0E0"/><circle cx="17" cy="12" r="1" fill="#BFB0E0"/><circle cx="7" cy="12" r="1" fill="#BFB0E0"/></svg>
-      </div>
-      <div class="nav-text">
-        <div class="nav-title">每日复盘</div>
-        <div class="nav-sub">成长 · 反思 · 规划</div>
-      </div>
-      <div class="nav-badge">7</div>
-    </div>
-    <div class="nav-item" data-panel="recipe" onclick="switchPanel('recipe',this)">
-      <div class="nav-icon" style="background:linear-gradient(135deg,#9FCB95,#7BAB6E);">
-        <svg viewBox="0 0 24 24"><path d="M5 11 L19 11 L17 21 L7 21 Z" fill="#fff"/><line x1="12" y1="3" x2="12" y2="9" stroke="#7BAB6E" stroke-width="2"/><path d="M12 6 Q9 4 7 6 M12 6 Q15 4 17 6" stroke="#7BAB6E" stroke-width="1.5" fill="none"/></svg>
-      </div>
-      <div class="nav-text">
-        <div class="nav-title">菜谱</div>
-        <div class="nav-sub">三餐 · 食谱收藏</div>
-      </div>
-      <div class="nav-badge">8</div>
-    </div>
-  </nav>
+  <!-- 左右分栏 -->
+  <div class="main-layout">
 
-  <!-- ====== 主内容区 ====== -->
-  <div class="main-content">
+    <!-- 左侧边栏 -->
+    <nav class="sidebar">
+      <div class="nav-item active" data-panel="plan" onclick="switchPanel('plan',this)">
+        <div class="nav-icon">📋</div>
+        <div class="nav-label">每日计划</div>
+      </div>
+      <div class="nav-item" data-panel="read" onclick="switchPanel('read',this)">
+        <div class="nav-icon">📖</div>
+        <div class="nav-label">读书</div>
+      </div>
+      <div class="nav-item" data-panel="sport" onclick="switchPanel('sport',this)">
+        <div class="nav-icon">🧘</div>
+        <div class="nav-label">运动</div>
+      </div>
+      <div class="nav-item" data-panel="study" onclick="switchPanel('study',this)">
+        <div class="nav-icon">✏️</div>
+        <div class="nav-label">学习</div>
+      </div>
+      <div class="nav-item" data-panel="teach" onclick="switchPanel('teach',this)">
+        <div class="nav-icon">👩‍🏫</div>
+        <div class="nav-label">教学</div>
+      </div>
+      <div class="nav-item" data-panel="memo" onclick="switchPanel('memo',this)">
+        <div class="nav-icon">📝</div>
+        <div class="nav-label">备忘录</div>
+      </div>
+      <div class="nav-item" data-panel="review" onclick="switchPanel('review',this)">
+        <div class="nav-icon">🌙</div>
+        <div class="nav-label">每日复盘</div>
+      </div>
+      <div class="nav-item" data-panel="recipe" onclick="switchPanel('recipe',this)">
+        <div class="nav-icon">🥗</div>
+        <div class="nav-label">菜谱</div>
+      </div>
+    </nav>
 
-    <!-- ============ 1. 每日计划 ============ -->
-    <div class="panel active" id="panel-plan">
-      <!-- 月度日历 -->
-      <div class="card">
-        <span class="layer-tag">A-日历组件</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--pink-100);">
-            <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="15" rx="2" fill="#fff" stroke="#F0A0B8" stroke-width="1.5"/><line x1="3" y1="10" x2="21" y2="10" stroke="#F0A0B8" stroke-width="1.5"/><line x1="8" y1="3" x2="8" y2="7" stroke="#F0A0B8" stroke-width="2"/><line x1="16" y1="3" x2="16" y2="7" stroke="#F0A0B8" stroke-width="2"/></svg>
-          </span>
-          月度日历
-        </div>
-        <div class="calendar-wrap">
-          <!-- 小猫贴纸 -->
-          <span class="calendar-sticker tl">
-            <svg viewBox="0 0 36 36">
-              <polygon points="6,12 10,5 14,12" fill="#FFFFFF"/>
-              <polygon points="22,12 26,5 30,12" fill="#FFFFFF"/>
-              <circle cx="18" cy="20" r="11" fill="#FFFFFF"/>
-              <circle cx="14" cy="18" r="1.2" fill="#6B5566"/>
-              <circle cx="22" cy="18" r="1.2" fill="#6B5566"/>
-              <path d="M16 23 L18 24 L20 23" stroke="#F0A0B8" stroke-width="1.2" fill="none"/>
-              <circle cx="13" cy="21" r="1" fill="#FDEEF3"/>
-              <circle cx="23" cy="21" r="1" fill="#FDEEF3"/>
-            </svg>
-          </span>
-          <!-- 爪印贴纸 -->
-          <span class="calendar-sticker br">
-            <svg viewBox="0 0 32 32">
-              <ellipse cx="16" cy="20" rx="5" ry="6" fill="#F7BDD0"/>
-              <ellipse cx="9" cy="12" rx="2.5" ry="3" fill="#F7BDD0"/>
-              <ellipse cx="23" cy="12" rx="2.5" ry="3" fill="#F7BDD0"/>
-              <ellipse cx="6" cy="18" rx="2" ry="2.5" fill="#F7BDD0"/>
-              <ellipse cx="26" cy="18" rx="2" ry="2.5" fill="#F7BDD0"/>
-            </svg>
-          </span>
-          <div class="calendar-header">
-            <button class="cal-nav-btn" onclick="changeMonth(-1)">‹</button>
-            <span class="cal-month" id="calMonthLabel">2026年7月</span>
-            <button class="cal-nav-btn" onclick="changeMonth(1)">›</button>
+    <!-- 右侧内容 -->
+    <div class="content-area">
+
+      <!-- 1. 每日计划 -->
+      <div class="panel active" id="panel-plan">
+        <div class="card calendar-card">
+          <span class="cal-sticker">🐰💕</span>
+          <div class="cal-header">
+            <div class="cal-month" id="calMonth">2026年7月</div>
+            <div>
+              <button class="cal-arrow" onclick="changeMonth(-1)">‹</button>
+              <button class="cal-arrow" onclick="changeMonth(1)">›</button>
+            </div>
           </div>
           <div class="cal-weekdays">
             <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
           </div>
           <div class="cal-days" id="calDays"></div>
         </div>
-      </div>
 
-      <!-- 待办清单 -->
-      <div class="card">
-        <span class="layer-tag">B-待办清单</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--pink-100);">
-            <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3" fill="#fff" stroke="#F0A0B8" stroke-width="1.5"/><path d="M8 12 L11 15 L16 9" stroke="#F0A0B8" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-          </span>
-          待办
-          <span class="count-badge" id="todoCount">1</span>
-        </div>
-        <div class="todo-input-row">
-          <input type="text" class="todo-input" id="todoInput" placeholder="添加新任务～" onkeypress="if(event.key==='Enter')addTodo()">
-          <button class="todo-add-btn" onclick="addTodo()">+</button>
-        </div>
-        <div class="todo-list" id="todoList"></div>
-      </div>
-    </div>
-
-    <!-- ============ 2. 读书 ============ -->
-    <div class="panel" id="panel-read">
-      <!-- 书单收纳 -->
-      <div class="card">
-        <span class="layer-tag">A-书单收纳</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--blue-100);">
-            <svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="16" rx="1" fill="#fff"/><rect x="14" y="4" width="6" height="16" rx="1" fill="#fff"/><line x1="5" y1="8" x2="9" y2="8" stroke="#B5DAEF" stroke-width="1"/><line x1="15" y1="8" x2="19" y2="8" stroke="#B5DAEF" stroke-width="1"/></svg>
-          </span>
-          书单收纳
-        </div>
-        <div class="book-status-tabs">
-          <div class="book-status-tab to-read active" onclick="switchBookTab(this,'to-read')">待读</div>
-          <div class="book-status-tab read" onclick="switchBookTab(this,'read')">已读</div>
-        </div>
-        <div id="bookListToRead">
-          <div class="book-item">
-            <div class="book-cover" style="background:#F7BDD0;">草</div>
-            <div class="book-info">
-              <div class="book-title">人间草木</div>
-              <div class="book-meta">汪曾祺 · 散文</div>
-            </div>
-            <span class="book-tag" style="background:var(--pink-50);color:var(--pink-300);">待读</span>
-          </div>
-          <div class="book-item">
-            <div class="book-cover" style="background:#FCEBBE;">窗</div>
-            <div class="book-info">
-              <div class="book-title">窗边的小豆豆</div>
-              <div class="book-meta">黑柳彻子 · 童话</div>
-            </div>
-            <span class="book-tag" style="background:var(--pink-50);color:var(--pink-300);">待读</span>
-          </div>
-          <div class="book-item">
-            <div class="book-cover" style="background:#D2EAF7;">孩</div>
-            <div class="book-info">
-              <div class="book-title">孩子的宇宙</div>
-              <div class="book-meta">河合隼雄 · 心理</div>
-            </div>
-            <span class="book-tag" style="background:var(--pink-50);color:var(--pink-300);">待读</span>
-          </div>
-        </div>
-        <div id="bookListRead" style="display:none;">
-          <div class="book-item">
-            <div class="book-cover" style="background:#DDEEDB;">慢</div>
-            <div class="book-info">
-              <div class="book-title">慢慢来</div>
-              <div class="book-meta">朱自清 · 散文</div>
-            </div>
-            <span class="book-tag" style="background:var(--green-50);color:#7BAB6E;">已读</span>
-          </div>
-          <div class="book-item">
-            <div class="book-cover" style="background:#DDEEDB;">王</div>
-            <div class="book-info">
-              <div class="book-title">小王子</div>
-              <div class="book-meta">圣埃克苏佩里 · 童话</div>
-            </div>
-            <span class="book-tag" style="background:var(--green-50);color:#7BAB6E;">已读</span>
+        <div class="card">
+          <div class="card-title">待办 <span class="tag" id="todoTag">1/5</span></div>
+          <div class="todo-list" id="todoList"></div>
+          <div class="todo-add-row">
+            <input type="text" class="todo-input" id="todoInput" placeholder="添加待办，回车确认" onkeypress="if(event.key==='Enter')addTodo()">
+            <button class="todo-add" onclick="addTodo()">添加</button>
           </div>
         </div>
       </div>
 
-      <!-- 阅读打卡 -->
-      <div class="card">
-        <span class="layer-tag">B-阅读打卡</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--yellow-100);">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8" fill="#fff" stroke="#F9E29C" stroke-width="1.5"/><path d="M12 8 V13 L15 15" stroke="#F9E29C" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M9 3 H15 M12 3 V5" stroke="#F9E29C" stroke-width="1.5"/></svg>
-          </span>
-          阅读打卡
-        </div>
-        <div class="reading-stats">
-          <div class="stat-pill"><div class="num">28</div><div class="label">累计天数</div></div>
-          <div class="stat-pill" style="background:var(--pink-50);"><div class="num">45'</div><div class="label">今日时长</div></div>
-          <div class="stat-pill" style="background:var(--blue-50);"><div class="num">12</div><div class="label">今日页码</div></div>
-        </div>
-        <div class="todo-input-row">
-          <input type="text" class="todo-input" placeholder="记录今日阅读..." onkeypress="if(event.key==='Enter'){this.value='';alert('阅读记录已保存～')}">
-          <button class="todo-add-btn" onclick="this.previousElementSibling.value='';alert('阅读记录已保存～')">+</button>
-        </div>
-      </div>
-
-      <!-- 读书笔记 -->
-      <div class="card">
-        <span class="layer-tag">C-读书笔记</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--lavender-100);">
-            <svg viewBox="0 0 24 24"><path d="M5 18 L5 6 Q5 4 7 4 L17 4 Q19 4 19 6 L19 18" fill="#fff" stroke="#E4DBF2" stroke-width="1.5"/><line x1="8" y1="9" x2="16" y2="9" stroke="#E4DBF2" stroke-width="1"/><line x1="8" y1="12" x2="16" y2="12" stroke="#E4DBF2" stroke-width="1"/><line x1="8" y1="15" x2="13" y2="15" stroke="#E4DBF2" stroke-width="1"/></svg>
-          </span>
-          读书笔记
-        </div>
-        <div class="note-item">
-          <div class="quote">"如果你来访我，我不在，请和我门外的花坐一会儿。"</div>
-          <div class="source">— 《人间草木》汪曾祺</div>
-          <span class="note-tag" style="background:var(--lavender-50);color:#8B7BAA;">摘抄</span>
-          <span class="note-tag" style="background:var(--pink-50);color:var(--pink-300);">散文</span>
-        </div>
-        <div class="note-item">
-          <div class="quote">所有的大人都曾经是小孩，虽然，只有少数人记得。</div>
-          <div class="source">— 《小王子》</div>
-          <span class="note-tag" style="background:var(--yellow-50);color:#C4A02E;">感悟</span>
-        </div>
-      </div>
-
-      <!-- 好书收藏 -->
-      <div class="card">
-        <span class="layer-tag">D-好书收藏</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--pink-100);">
-            <svg viewBox="0 0 24 24"><path d="M12 21 C12 21 4 14 4 9 C4 5 7 3 10 4 C11 4 12 5 12 6 C12 5 13 4 14 4 C17 3 20 5 20 9 C20 14 12 21 12 21z" fill="#fff" stroke="#F0A0B8" stroke-width="1.5"/></svg>
-          </span>
-          好书收藏
-        </div>
-        <div class="book-item">
-          <div class="book-cover" style="background:#FDEEF3;">爱</div>
-          <div class="book-info">
-            <div class="book-title">窗边的小豆豆</div>
-            <div class="book-meta">"每次翻开都觉得被温柔以待"</div>
+      <!-- 2. 读书 -->
+      <div class="panel" id="panel-read">
+        <div class="card">
+          <div class="card-title">📚 书单收纳 <span class="tag">3</span></div>
+          <div class="tab-row">
+            <button class="tab-btn active" onclick="switchBookTab(this,0)">待读</button>
+            <button class="tab-btn" onclick="switchBookTab(this,1)">已读</button>
           </div>
-          <span class="book-tag" style="background:var(--pink-100);color:var(--pink-400);">收藏</span>
-        </div>
-        <div class="book-item">
-          <div class="book-cover" style="background:#FEF6E0;">浮</div>
-          <div class="book-info">
-            <div class="book-title">浮生六记</div>
-            <div class="book-meta">"闲时翻阅，烟火气十足"</div>
+          <div id="bookList0">
+            <div class="list-item"><div class="list-icon" style="background:#FFD9E8;">📕</div><div class="list-body"><div class="list-title">人间草木</div><div class="list-desc">汪曾祺 · 散文</div></div><span class="list-tag" style="background:#FFF0F5;color:#F06292;">待读</span></div>
+            <div class="list-item"><div class="list-icon" style="background:#FCEBBE;">📗</div><div class="list-body"><div class="list-title">窗边的小豆豆</div><div class="list-desc">黑柳彻子 · 童话</div></div><span class="list-tag" style="background:#FFF0F5;color:#F06292;">待读</span></div>
+            <div class="list-item"><div class="list-icon" style="background:#D2EAF7;">📘</div><div class="list-body"><div class="list-title">孩子的宇宙</div><div class="list-desc">河合隼雄 · 心理</div></div><span class="list-tag" style="background:#FFF0F5;color:#F06292;">待读</span></div>
           </div>
-          <span class="book-tag" style="background:var(--pink-100);color:var(--pink-400);">收藏</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ============ 3. 运动 ============ -->
-    <div class="panel" id="panel-sport">
-      <div class="card">
-        <span class="layer-tag">A-运动打卡</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--green-100);">
-            <svg viewBox="0 0 24 24"><circle cx="13" cy="5" r="2" fill="#fff"/><path d="M10 8 L8 14 L11 14 L9 21 L11 21 L13 14 L15 14 L13 8" fill="#fff"/></svg>
-          </span>
-          每日运动打卡
-        </div>
-        <div class="exercise-log-item">
-          <div class="ex-icon">🚶</div>
-          <div><div class="ex-type">散步</div><div class="ex-duration">30分钟 · 傍晚</div></div>
-          <div class="ex-feel">轻松</div>
-        </div>
-        <div class="exercise-log-item">
-          <div class="ex-icon">🧘</div>
-          <div><div class="ex-type">轻柔拉伸</div><div class="ex-duration">15分钟 · 睡前</div></div>
-          <div class="ex-feel">舒服</div>
-        </div>
-        <div class="exercise-log-item">
-          <div class="ex-icon">🤰</div>
-          <div><div class="ex-type">孕妇瑜伽</div><div class="ex-duration">20分钟 · 午后</div></div>
-          <div class="ex-feel">不错</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="layer-tag">B-运动日志</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--blue-100);">
-            <svg viewBox="0 0 24 24"><path d="M5 5 H17 V19 L11 15 L5 19 Z" fill="#fff" stroke="#B5DAEF" stroke-width="1.5"/></svg>
-          </span>
-          运动日志
-        </div>
-        <div class="note-item" style="background:var(--green-50);border-left-color:var(--green-100);">
-          <div class="quote" style="font-style:normal;">散步回来感觉腿部轻松了许多，宝宝也在肚子里动了几下，大概是也很开心吧～拉伸时腰背的酸胀感缓解了不少。</div>
-          <div class="source">— 7月28日 运动后记录</div>
-        </div>
-        <div class="note-item" style="background:var(--green-50);border-left-color:var(--green-100);">
-          <div class="quote" style="font-style:normal;">今天尝试了新的拉伸动作，肩颈放松了很多。坚持每天动一动，整个人精神状态好多了。</div>
-          <div class="source">— 7月27日</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="layer-tag">C-每周统计</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--pink-100);">
-            <svg viewBox="0 0 24 24"><rect x="5" y="14" width="3" height="6" fill="#fff"/><rect x="10.5" y="10" width="3" height="10" fill="#fff"/><rect x="16" y="6" width="3" height="14" fill="#fff"/></svg>
-          </span>
-          每周运动统计
-        </div>
-        <div class="reading-stats" style="margin-bottom:8px;">
-          <div class="stat-pill" style="background:var(--green-50);"><div class="num">5</div><div class="label">本周天数</div></div>
-          <div class="stat-pill" style="background:var(--yellow-50);"><div class="num">125'</div><div class="label">总时长</div></div>
-          <div class="stat-pill" style="background:var(--pink-50);"><div class="num">3</div><div class="label">种类</div></div>
-        </div>
-        <div class="week-chart" id="weekChart">
-          <div class="bar-col"><div class="bar" style="height:60%"></div><div class="day-label">一</div></div>
-          <div class="bar-col"><div class="bar" style="height:40%"></div><div class="day-label">二</div></div>
-          <div class="bar-col"><div class="bar" style="height:80%"></div><div class="day-label">三</div></div>
-          <div class="bar-col"><div class="bar" style="height:10%"></div><div class="day-label">四</div></div>
-          <div class="bar-col"><div class="bar" style="height:50%"></div><div class="day-label">五</div></div>
-          <div class="bar-col"><div class="bar" style="height:70%"></div><div class="day-label">六</div></div>
-          <div class="bar-col"><div class="bar" style="height:90%"></div><div class="day-label">日</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ============ 4. 学习 ============ -->
-    <div class="panel" id="panel-study">
-      <div class="card">
-        <span class="layer-tag">A-练字打卡</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--yellow-100);">
-            <svg viewBox="0 0 24 24"><path d="M3 21 L8 16 L13 11 L18 6 L21 9 L16 14 L11 19 L6 24 Z" fill="#fff" stroke="#F9E29C" stroke-width="1"/><circle cx="18" cy="6" r="2" fill="#fff" stroke="#F9E29C" stroke-width="1"/></svg>
-          </span>
-          练字打卡
-        </div>
-        <div class="calli-record">
-          <div style="font-size:24px;">🖌</div>
-          <div style="flex:1;">
-            <div class="calli-time">25<span style="font-size:13px;">分钟</span></div>
-            <div class="calli-label">今日毛笔 · 临摹《九成宫》</div>
+          <div id="bookList1" style="display:none;">
+            <div class="list-item"><div class="list-icon" style="background:#DDEEDB;">📙</div><div class="list-body"><div class="list-title">小王子</div><div class="list-desc">圣埃克苏佩里 · 童话</div></div><span class="list-tag" style="background:#E8F5E9;color:#6DA884;">已读</span></div>
           </div>
-          <div style="font-size:11px;color:var(--text-light);">第18天</div>
         </div>
-        <div class="calli-record" style="background:var(--blue-50);">
-          <div style="font-size:24px;">✒</div>
-          <div style="flex:1;">
-            <div class="calli-time">15<span style="font-size:13px;">分钟</span></div>
-            <div class="calli-label">今日硬笔 · 临摹田英章楷书</div>
+
+        <div class="card">
+          <div class="card-title">⏱️ 阅读打卡</div>
+          <div class="stat-row">
+            <div class="stat-pill"><div class="n">28</div><div class="l">累计天数</div></div>
+            <div class="stat-pill" style="background:#FFF9E6;"><div class="n">45'</div><div class="l">今日时长</div></div>
+            <div class="stat-pill" style="background:#EAF6FC;"><div class="n">12</div><div class="l">今日页码</div></div>
           </div>
-          <div style="font-size:11px;color:var(--text-light);">第18天</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">✍️ 读书笔记</div>
+          <div class="note-card"><div class="q">"如果你来访我，我不在，请和我门外的花坐一会儿。"</div><div class="s">— 《人间草木》汪曾祺</div></div>
+          <div class="note-card"><div class="q">所有的大人都曾经是小孩，虽然，只有少数人记得。</div><div class="s">— 《小王子》</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">💝 好书收藏</div>
+          <div class="list-item"><div class="list-icon" style="background:#FFF0F5;">🌟</div><div class="list-body"><div class="list-title">窗边的小豆豆</div><div class="list-desc">每次翻开都觉得被温柔以待</div></div><span class="list-tag" style="background:#FFD9E8;color:#F06292;">收藏</span></div>
         </div>
       </div>
 
-      <div class="card">
-        <span class="layer-tag">B-练字心得</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--pink-100);">
-            <svg viewBox="0 0 24 24"><path d="M12 2 L14 8 L20 8 L15 12 L17 18 L12 14 L7 18 L9 12 L4 8 L10 8 Z" fill="#fff" stroke="#F0A0B8" stroke-width="1"/></svg>
-          </span>
-          练字心得
+      <!-- 3. 运动 -->
+      <div class="panel" id="panel-sport">
+        <div class="card">
+          <div class="card-title">🚶 每日运动打卡</div>
+          <div class="list-item"><div class="list-icon" style="background:#E8F5E9;">🚶‍♀️</div><div class="list-body"><div class="list-title">散步</div><div class="list-desc">30分钟 · 傍晚</div></div><span class="list-tag" style="background:#E8F5E9;color:#6DA884;">轻松</span></div>
+          <div class="list-item"><div class="list-icon" style="background:#E8F5E9;">🧘‍♀️</div><div class="list-body"><div class="list-title">轻柔拉伸</div><div class="list-desc">15分钟 · 睡前</div></div><span class="list-tag" style="background:#E8F5E9;color:#6DA884;">舒服</span></div>
+          <div class="list-item"><div class="list-icon" style="background:#E8F5E9;">🤰</div><div class="list-body"><div class="list-title">孕妇瑜伽</div><div class="list-desc">20分钟 · 午后</div></div><span class="list-tag" style="background:#E8F5E9;color:#6DA884;">不错</span></div>
         </div>
-        <div class="note-item" style="background:var(--yellow-50);border-left-color:var(--yellow-200);">
-          <div class="quote" style="font-style:normal;">今天写"永"字，竖钩的收笔还是不够利落。老师说要"意在笔先"，落笔前先想好走势。明天重点练习钩法。</div>
-          <div class="source">— 7月28日 毛笔心得</div>
-          <span class="note-tag" style="background:var(--white);color:#C4A02E;">笔法改进</span>
+
+        <div class="card">
+          <div class="card-title">📔 运动日志</div>
+          <div class="note-card" style="border-left-color:#A8D5BA;"><div class="q" style="font-style:normal;">散步回来腿部轻松很多，宝宝也在肚子里动了几下～拉伸时腰背酸胀缓解不少。</div><div class="s">— 7月28日</div></div>
+          <div class="note-card" style="border-left-color:#A8D5BA;"><div class="q" style="font-style:normal;">今天尝试了新的拉伸动作，肩颈放松了很多。</div><div class="s">— 7月27日</div></div>
         </div>
-        <div class="note-item" style="background:var(--yellow-50);border-left-color:var(--yellow-200);">
-          <div class="quote" style="font-style:normal;">硬笔楷书的横画注意"起笔顿、行笔轻、收笔顿"，节奏感比之前好了很多。</div>
-          <div class="source">— 7月27日 硬笔心得</div>
-          <span class="note-tag" style="background:var(--white);color:#C4A02E;">书写感悟</span>
+
+        <div class="card">
+          <div class="card-title">📊 每周运动统计</div>
+          <div class="stat-row">
+            <div class="stat-pill" style="background:#E8F5E9;"><div class="n">5</div><div class="l">本周天数</div></div>
+            <div class="stat-pill" style="background:#FFF9E6;"><div class="n">125'</div><div class="l">总时长</div></div>
+            <div class="stat-pill"><div class="n">3</div><div class="l">种类</div></div>
+          </div>
+          <div class="week-chart">
+            <div class="bar-col"><div class="bar" style="height:60%"></div><div class="d">一</div></div>
+            <div class="bar-col"><div class="bar" style="height:40%"></div><div class="d">二</div></div>
+            <div class="bar-col"><div class="bar" style="height:80%"></div><div class="d">三</div></div>
+            <div class="bar-col"><div class="bar" style="height:10%"></div><div class="d">四</div></div>
+            <div class="bar-col"><div class="bar" style="height:50%"></div><div class="d">五</div></div>
+            <div class="bar-col"><div class="bar" style="height:70%"></div><div class="d">六</div></div>
+            <div class="bar-col"><div class="bar" style="height:90%"></div><div class="d">日</div></div>
+          </div>
         </div>
       </div>
 
-      <div class="card">
-        <span class="layer-tag">C-知识积累</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--blue-100);">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#fff" stroke="#B5DAEF" stroke-width="1.5"/><path d="M8 12 Q12 8 16 12 Q12 16 8 12" fill="none" stroke="#B5DAEF" stroke-width="1.5"/><circle cx="12" cy="12" r="2" fill="#B5DAEF"/></svg>
-          </span>
-          知识积累
+      <!-- 4. 学习 -->
+      <div class="panel" id="panel-study">
+        <div class="card">
+          <div class="card-title">🖌️ 练字打卡</div>
+          <div class="stat-row">
+            <div class="stat-pill" style="background:#FFF9E6;"><div class="n">25'</div><div class="l">毛笔 · 九成宫</div></div>
+            <div class="stat-pill" style="background:#EAF6FC;"><div class="n">15'</div><div class="l">硬笔 · 田英章</div></div>
+            <div class="stat-pill"><div class="n">18</div><div class="l">坚持天数</div></div>
+          </div>
         </div>
-        <div class="knowledge-card">
-          <div class="content">"落霞与孤鹜齐飞，秋水共长天一色。" —— 王勃《滕王阁序》</div>
-          <div class="category">文学 · 唐代散文</div>
-        </div>
-        <div class="knowledge-card">
-          <div class="content">贞观之治：唐太宗李世民在位期间的清明政治，知人善任、虚心纳谏，开创盛世。</div>
-          <div class="category">历史 · 唐朝</div>
-        </div>
-        <div class="knowledge-card">
-          <div class="content">"教育的本质意味着：一棵树摇动另一棵树，一朵云推动另一朵云，一个灵魂唤醒另一个灵魂。" —— 雅斯贝尔斯</div>
-          <div class="category">教育哲学</div>
-        </div>
-      </div>
-    </div>
 
-    <!-- ============ 5. 教学 ============ -->
-    <div class="panel" id="panel-teach">
-      <div class="card">
-        <span class="layer-tag">A-备课专区</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--pink-100);">
-            <svg viewBox="0 0 24 24"><path d="M3 7 L12 3 L21 7 L12 11 Z" fill="#fff"/><path d="M5 9 L5 14 Q12 17 19 14 L19 9" fill="none" stroke="#F0A0B8" stroke-width="1.5"/></svg>
-          </span>
-          备课专区
+        <div class="card">
+          <div class="card-title">💡 练字心得</div>
+          <div class="note-card" style="border-left-color:#F0D78C;"><div class="q" style="font-style:normal;">今天写"永"字，竖钩收笔不够利落。老师说要"意在笔先"，落笔前先想好走势。</div><div class="s">— 毛笔心得</div></div>
+          <div class="note-card" style="border-left-color:#F0D78C;"><div class="q" style="font-style:normal;">硬笔楷书横画注意"起笔顿、行笔轻、收笔顿"，节奏感好了很多。</div><div class="s">— 硬笔心得</div></div>
         </div>
-        <div class="teach-folder">
-          <div class="folder-icon" style="background:var(--pink-200);">教</div>
-          <div><div class="folder-name">教学理念</div><div class="folder-desc">育人初心 · 教学主张</div></div>
-          <div class="folder-count">3篇</div>
-        </div>
-        <div class="teach-folder">
-          <div class="folder-icon" style="background:var(--blue-200);color:#fff;">标</div>
-          <div><div class="folder-name">课标与教案</div><div class="folder-desc">课时教案 · 课标解读</div></div>
-          <div class="folder-count">12篇</div>
-        </div>
-        <div class="teach-folder">
-          <div class="folder-icon" style="background:var(--yellow-200);color:#fff;">设</div>
-          <div><div class="folder-name">教学设计</div><div class="folder-desc">活动设计 · 课堂流程</div></div>
-          <div class="folder-count">8篇</div>
-        </div>
-        <div class="teach-folder">
-          <div class="folder-icon" style="background:var(--green-200);color:#fff;">课</div>
-          <div><div class="folder-name">课件素材</div><div class="folder-desc">PPT · 图片 · 音频</div></div>
-          <div class="folder-count">25个</div>
+
+        <div class="card">
+          <div class="card-title">🧠 知识积累</div>
+          <div class="note-card" style="border-left-color:#A8D0E6;"><div class="q" style="font-style:normal;">"落霞与孤鹜齐飞，秋水共长天一色。" —— 王勃《滕王阁序》</div><div class="s">📜 文学 · 唐代散文</div></div>
+          <div class="note-card" style="border-left-color:#A8D0E6;"><div class="q" style="font-style:normal;">贞观之治：唐太宗知人善任、虚心纳谏，开创盛世。</div><div class="s">🏛️ 历史 · 唐朝</div></div>
         </div>
       </div>
 
-      <div class="card">
-        <span class="layer-tag">B-教研资料</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--blue-100);">
-            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="#fff" stroke-width="2"/><line x1="16" y1="16" x2="20" y2="20" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>
-          </span>
-          教研资料
+      <!-- 5. 教学 -->
+      <div class="panel" id="panel-teach">
+        <div class="card">
+          <div class="card-title">📂 备课专区</div>
+          <div class="list-item"><div class="list-icon" style="background:#FFF0F5;">💡</div><div class="list-body"><div class="list-title">教学理念</div><div class="list-desc">育人初心 · 教学主张</div></div><span class="list-tag" style="background:#FFF0F5;color:#F06292;">3篇</span></div>
+          <div class="list-item"><div class="list-icon" style="background:#EAF6FC;">📐</div><div class="list-body"><div class="list-title">课标与教案</div><div class="list-desc">课时教案 · 课标解读</div></div><span class="list-tag" style="background:#EAF6FC;color:#5B9BC9;">12篇</span></div>
+          <div class="list-item"><div class="list-icon" style="background:#FFF9E6;">🎨</div><div class="list-body"><div class="list-title">教学设计</div><div class="list-desc">活动设计 · 课堂流程</div></div><span class="list-tag" style="background:#FFF9E6;color:#C4A02E;">8篇</span></div>
+          <div class="list-item"><div class="list-icon" style="background:#E8F5E9;">🖼️</div><div class="list-body"><div class="list-title">课件素材</div><div class="list-desc">PPT · 图片 · 音频</div></div><span class="list-tag" style="background:#E8F5E9;color:#6DA884;">25个</span></div>
         </div>
-        <div class="teach-folder">
-          <div class="folder-icon" style="background:var(--blue-200);color:#fff;">听</div>
-          <div><div class="folder-name">听课记录</div><div class="folder-desc">同行课堂观摩笔记</div></div>
-          <div class="folder-count">6篇</div>
+
+        <div class="card">
+          <div class="card-title">🔍 教研资料</div>
+          <div class="list-item"><div class="list-icon" style="background:#EAF6FC;">👂</div><div class="list-body"><div class="list-title">听课记录</div><div class="list-desc">同行课堂观摩笔记</div></div><span class="list-tag" style="background:#EAF6FC;color:#5B9BC9;">6篇</span></div>
+          <div class="list-item"><div class="list-icon" style="background:#FFF0F5;">⭐</div><div class="list-body"><div class="list-title">教学评价</div><div class="list-desc">互评 · 自评记录</div></div><span class="list-tag" style="background:#FFF0F5;color:#F06292;">4篇</span></div>
         </div>
-        <div class="teach-folder">
-          <div class="folder-icon" style="background:var(--pink-200);">评</div>
-          <div><div class="folder-name">教学评价</div><div class="folder-desc">互评 · 自评记录</div></div>
-          <div class="folder-count">4篇</div>
+
+        <div class="card">
+          <div class="card-title">✍️ 文稿写作</div>
+          <div class="list-item"><div class="list-icon" style="background:#FFF0F5;">🎤</div><div class="list-body"><div class="list-title">发言稿</div><div class="list-desc">会议 · 活动发言</div></div><span class="list-tag" style="background:#FFF0F5;color:#F06292;">2篇</span></div>
+          <div class="list-item"><div class="list-icon" style="background:#E8F5E9;">师德</div><div class="list-body"><div class="list-title">师德总结</div><div class="list-desc">学期师德述职</div></div><span class="list-tag" style="background:#E8F5E9;color:#6DA884;">1篇</span></div>
         </div>
-        <div class="teach-folder">
-          <div class="folder-icon" style="background:var(--yellow-200);color:#fff;">研</div>
-          <div><div class="folder-name">研讨记录</div><div class="folder-desc">教研组谈话纪要</div></div>
-          <div class="folder-count">3篇</div>
+
+        <div class="card">
+          <div class="card-title">🌱 学生管理</div>
+          <div class="note-card" style="border-left-color:#A8D5BA;"><div class="q" style="font-style:normal;">小宇今天主动举手回答问题了，虽然声音还小，但能感受到他的勇气在生长。</div><div class="s">— 班级育人心得</div></div>
         </div>
       </div>
 
-      <div class="card">
-        <span class="layer-tag">C-文稿写作</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--yellow-100);">
-            <svg viewBox="0 0 24 24"><path d="M12 3 L19 6 V12 Q19 17 12 21 Q5 17 5 12 V6 Z" fill="#fff" stroke="#F9E29C" stroke-width="1.5"/><path d="M9 12 L11 14 L15 10" stroke="#F9E29C" stroke-width="1.5" fill="none"/></svg>
-          </span>
-          文稿写作
+      <!-- 6. 备忘录 -->
+      <div class="panel" id="panel-memo">
+        <div class="card">
+          <div class="card-title">💡 灵感速记</div>
+          <div class="memo-card pink"><div class="memo-text">给孩子们的阅读角加一个"好书推荐墙"，每本书配一张手绘小卡片。</div><div class="memo-time">7月28日 14:30</div><button class="memo-edit">编辑</button></div>
         </div>
-        <div class="teach-folder">
-          <div class="folder-icon" style="background:var(--pink-200);">言</div>
-          <div><div class="folder-name">发言稿</div><div class="folder-desc">会议 · 活动发言</div></div>
-          <div class="folder-count">2篇</div>
+
+        <div class="card">
+          <div class="card-title">📌 生活备忘</div>
+          <div class="memo-card yellow"><div class="memo-text"><strong style="color:#F06292;">[重要]</strong> 产检提醒：8月5日 上午10:00 · 唐筛，空腹带医保卡</div><div class="memo-time">本周事项</div><button class="memo-edit">编辑</button></div>
+          <div class="memo-card yellow"><div class="memo-text">购物清单：叶酸片、牛奶、核桃、红枣、小米</div><div class="memo-time">7月28日</div><button class="memo-edit">编辑</button></div>
         </div>
-        <div class="teach-folder">
-          <div class="folder-icon" style="background:var(--green-200);color:#fff;">德</div>
-          <div><div class="folder-name">师德总结</div><div class="folder-desc">学期师德述职</div></div>
-          <div class="folder-count">1篇</div>
-        </div>
-        <div class="teach-folder">
-          <div class="folder-icon" style="background:var(--blue-200);color:#fff;">文</div>
-          <div><div class="folder-name">期末文档</div><div class="folder-desc">总结 · 计划 · 报告</div></div>
-          <div class="folder-count">5篇</div>
+
+        <div class="card">
+          <div class="card-title">📝 文字草稿</div>
+          <div class="memo-card blue"><div class="memo-text">"慢慢来，比较快。"允许事情有自己的节奏，反而走得更稳更远。</div><div class="memo-time">随笔 · 7月28日</div><button class="memo-edit">编辑</button></div>
         </div>
       </div>
 
-      <div class="card">
-        <span class="layer-tag">D-学生管理</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--green-100);">
-            <svg viewBox="0 0 24 24"><path d="M12 2 L14 9 L21 9 L15 13 L17 20 L12 16 L7 20 L9 13 L3 9 L10 9 Z" fill="#fff" stroke="#9FCB95" stroke-width="1.5"/></svg>
-          </span>
-          学生管理
+      <!-- 7. 每日复盘 -->
+      <div class="panel" id="panel-review">
+        <div class="card">
+          <div class="card-title">🗓️ 回看成长轨迹</div>
+          <div class="archive-row">
+            <div class="archive-chip">7/22</div><div class="archive-chip">7/23</div><div class="archive-chip">7/24</div><div class="archive-chip">7/25</div><div class="archive-chip">7/26</div><div class="archive-chip">7/27</div><div class="archive-chip active">7/28 今日</div>
+          </div>
         </div>
-        <div class="note-item" style="background:var(--green-50);border-left-color:var(--green-100);">
-          <div class="quote" style="font-style:normal;">小宇今天主动举手回答问题了，虽然声音还很小，但能感受到他的勇气在慢慢生长。要及时肯定和鼓励。</div>
-          <div class="source">— 班级育人心得 · 7月28日</div>
-        </div>
-        <div class="note-item" style="background:var(--green-50);border-left-color:var(--green-100);">
-          <div class="quote" style="font-style:normal;">关于"因材施教"又有了新体会：每个孩子花期不同，不必催，只需耐心浇灌，静待花开。</div>
-          <div class="source">— 学生引导随笔 · 7月26日</div>
-        </div>
-      </div>
-    </div>
 
-    <!-- ============ 6. 备忘录 ============ -->
-    <div class="panel" id="panel-memo">
-      <div class="card">
-        <span class="layer-tag">A-灵感速记</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--pink-100);">
-            <svg viewBox="0 0 24 24"><path d="M9 18 L4 13 L11 6 L15 10 L8 17 Z" fill="#fff" stroke="#F0A0B8" stroke-width="1.5"/><line x1="13" y1="8" x2="17" y2="12" stroke="#F0A0B8" stroke-width="2"/></svg>
-          </span>
-          灵感速记
-        </div>
-        <div class="memo-card inspiration">
-          <div class="memo-text">可以给孩子们的阅读角加一个"好书推荐墙"，每本书配一张手绘小卡片，让推荐变得有仪式感。</div>
-          <div class="memo-time">7月28日 14:30</div>
-          <button class="memo-edit">编辑</button>
-        </div>
-        <div class="memo-card inspiration">
-          <div class="memo-text">孕期日记可以按"第X周"来记录，每周拍一张肚子变化照，配上当周的心情文字。</div>
-          <div class="memo-time">7月27日 21:15</div>
-          <button class="memo-edit">编辑</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="layer-tag">B-生活备忘</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--yellow-100);">
-            <svg viewBox="0 0 24 24"><path d="M5 21 L5 5 Q5 3 7 3 L17 3 Q19 3 19 5 L19 21" fill="#fff" stroke="#F9E29C" stroke-width="1.5"/><line x1="9" y1="8" x2="15" y2="8" stroke="#F9E29C" stroke-width="1.5"/><line x1="9" y1="12" x2="15" y2="12" stroke="#F9E29C" stroke-width="1.5"/><line x1="9" y1="16" x2="13" y2="16" stroke="#F9E29C" stroke-width="1.5"/><circle cx="19" cy="4" r="3" fill="#E87B9C"/></svg>
-          </span>
-          生活备忘
-        </div>
-        <div class="memo-card life">
-          <div class="memo-text"><strong style="color:#E87B9C;">[重要]</strong> 产检提醒：8月5日（周三）上午10:00 · 唐筛，记得空腹带医保卡</div>
-          <div class="memo-time">本周事项</div>
-          <button class="memo-edit">编辑</button>
-        </div>
-        <div class="memo-card life">
-          <div class="memo-text">证件办理：居住证续签 8月15日前</div>
-          <div class="memo-time">待办</div>
-          <button class="memo-edit">编辑</button>
-        </div>
-        <div class="memo-card life">
-          <div class="memo-text">购物清单：叶酸片、牛奶、核桃、红枣、小米</div>
-          <div class="memo-time">7月28日</div>
-          <button class="memo-edit">编辑</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="layer-tag">C-文字草稿</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--blue-100);">
-            <svg viewBox="0 0 24 24"><path d="M14 3 L21 3 L21 10 L18 13 L11 20 L4 21 L5 14 L12 7 Z" fill="#fff" stroke="#B5DAEF" stroke-width="1.5"/><line x1="14" y1="6" x2="18" y2="10" stroke="#B5DAEF" stroke-width="1.5"/></svg>
-          </span>
-          文字草稿
-        </div>
-        <div class="memo-card draft">
-          <div class="memo-text">"慢慢来，比较快。"——最近很喜欢这句话。允许自己不完美，允许事情有自己的节奏，反而走得更稳更远。</div>
-          <div class="memo-time">随笔 · 7月28日</div>
-          <button class="memo-edit">编辑</button>
-        </div>
-        <div class="memo-card draft">
-          <div class="memo-text">开学第一课开场白："新的学期，让我们一起种下一颗种子，用好奇心浇灌它，用坚持守护它……"</div>
-          <div class="memo-time">文案草稿 · 7月25日</div>
-          <button class="memo-edit">编辑</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ============ 7. 每日复盘 ============ -->
-    <div class="panel" id="panel-review">
-      <div class="card">
-        <span class="layer-tag">A-日期归档</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--lavender-100);">
-            <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2" fill="#fff" stroke="#E4DBF2" stroke-width="1.5"/><line x1="4" y1="9" x2="20" y2="9" stroke="#E4DBF2" stroke-width="1.5"/></svg>
-          </span>
-          回看成长轨迹
-        </div>
-        <div class="archive-strip">
-          <div class="archive-chip">7/22</div>
-          <div class="archive-chip">7/23</div>
-          <div class="archive-chip">7/24</div>
-          <div class="archive-chip">7/25</div>
-          <div class="archive-chip">7/26</div>
-          <div class="archive-chip">7/27</div>
-          <div class="archive-chip active">7/28 今日</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="layer-tag">B-今日完成</span>
-        <div class="review-section">
-          <div class="review-label">今日完成事项</div>
-          <div class="review-content">
-            <div class="review-item">完成散步30分钟 + 睡前拉伸15分钟</div>
-            <div class="review-item">毛笔练字25分钟，临摹《九成宫》两页</div>
+        <div class="card">
+          <div class="review-label">✅ 今日完成事项</div>
+          <div class="review-box">
+            <div class="review-item">散步30分钟 + 睡前拉伸15分钟</div>
+            <div class="review-item">毛笔练字25分钟，临摹《九成宫》</div>
             <div class="review-item">阅读《人间草木》12页</div>
-            <div class="review-item">备课：整理了下周的教案框架</div>
+            <div class="review-item">整理下周教案框架</div>
           </div>
         </div>
-      </div>
 
-      <div class="card">
-        <span class="layer-tag">C-收获成长</span>
-        <div class="review-section">
-          <div class="review-label">收获与成长</div>
-          <div class="review-content">
-            <div class="review-item"><strong>教学：</strong>今天整理教案时，重新思考了"以学生为中心"的课堂设计，把更多表达权交给孩子。</div>
-            <div class="review-item"><strong>自学：</strong>练字时体会到"意在笔先"的道理，做任何事都是如此——先想清楚再动手。</div>
-            <div class="review-item"><strong>生活：</strong>散步时宝宝踢了好几下，感受到生命在生长的力量，很幸福。</div>
+        <div class="card">
+          <div class="review-label">🌟 收获与成长</div>
+          <div class="review-box">
+            <div class="review-item"><strong>教学：</strong>重新思考"以学生为中心"的课堂设计。</div>
+            <div class="review-item"><strong>自学：</strong>练字时体会到"意在笔先"的道理。</div>
+            <div class="review-item"><strong>生活：</strong>散步时宝宝踢了好几下，很幸福。</div>
           </div>
         </div>
-      </div>
 
-      <div class="card">
-        <span class="layer-tag">D-不足反思</span>
-        <div class="review-section">
-          <div class="review-label">不足之处</div>
-          <div class="review-content">
-            <div class="review-item">下午本想读完一章书，结果刷了一会儿手机，注意力还需要训练。</div>
-            <div class="review-item">硬笔练字的时间有点短，明天争取保证20分钟以上。</div>
+        <div class="card">
+          <div class="review-label">🤔 不足之处</div>
+          <div class="review-box">
+            <div class="review-item">下午刷了一会儿手机，注意力还需训练。</div>
+            <div class="review-item">硬笔练字时间有点短，明天争取20分钟以上。</div>
           </div>
         </div>
-      </div>
 
-      <div class="card">
-        <span class="layer-tag">E-次日规划</span>
-        <div class="review-section" style="margin-bottom:0;">
-          <div class="review-label">明日简易规划</div>
-          <div class="review-content">
+        <div class="card">
+          <div class="review-label">🌅 明日简易规划</div>
+          <div class="review-box">
             <div class="review-item">晨间：散步30分钟 + 朗读古文15分钟</div>
             <div class="review-item">上午：完成教案PPT制作</div>
-            <div class="review-item">午后：练字40分钟（毛笔+硬笔）</div>
-            <div class="review-item">晚间：阅读30分钟 + 复盘记录</div>
+            <div class="review-item">午后：练字40分钟</div>
+            <div class="review-item">晚间：阅读30分钟 + 复盘</div>
           </div>
         </div>
       </div>
+
+      <!-- 8. 菜谱 -->
+      <div class="panel" id="panel-recipe">
+        <div class="card">
+          <div class="card-title">🍽️ 每日三餐规划</div>
+          <div class="meal-card m1">
+            <div class="meal-h"><span class="meal-icon">🌅</span><span class="meal-name">早餐</span><span class="meal-time">07:30</span></div>
+            <div class="meal-tags"><span class="meal-tag">温牛奶</span><span class="meal-tag">水煮蛋</span><span class="meal-tag">全麦面包</span><span class="meal-tag">蓝莓</span></div>
+          </div>
+          <div class="meal-card m2">
+            <div class="meal-h"><span class="meal-icon">☀️</span><span class="meal-name">午餐</span><span class="meal-time">12:00</span></div>
+            <div class="meal-tags"><span class="meal-tag">小米饭</span><span class="meal-tag">清蒸鲈鱼</span><span class="meal-tag">蒜蓉西兰花</span><span class="meal-tag">番茄豆腐汤</span></div>
+          </div>
+          <div class="meal-card m3">
+            <div class="meal-h"><span class="meal-icon">🌙</span><span class="meal-name">晚餐</span><span class="meal-time">18:00</span></div>
+            <div class="meal-tags"><span class="meal-tag">小米南瓜粥</span><span class="meal-tag">凉拌菠菜</span><span class="meal-tag">山药炖鸡汤</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📖 食谱收藏</div>
+          <div class="tab-row">
+            <button class="tab-btn active" onclick="switchRecipeTab(this)">全部</button>
+            <button class="tab-btn" onclick="switchRecipeTab(this)">养胃</button>
+            <button class="tab-btn" onclick="switchRecipeTab(this)">滋补</button>
+          </div>
+          <div class="list-item"><div class="list-icon" style="background:#E8F5E9;">🍲</div><div class="list-body"><div class="list-title">山药炖鸡汤</div><div class="list-desc">健脾养胃 · 孕期滋补</div></div><span class="list-tag" style="background:#E8F5E9;color:#6DA884;">滋补</span></div>
+          <div class="list-item"><div class="list-icon" style="background:#FFF9E6;">🥣</div><div class="list-body"><div class="list-title">小米南瓜粥</div><div class="list-desc">养胃暖身 · 易消化</div></div><span class="list-tag" style="background:#FFF9E6;color:#C4A02E;">养胃</span></div>
+          <div class="list-item"><div class="list-icon" style="background:#EAF6FC;">🐟</div><div class="list-body"><div class="list-title">清蒸鲈鱼</div><div class="list-desc">高蛋白 · 清淡鲜美</div></div><span class="list-tag" style="background:#EAF6FC;color:#5B9BC9;">家常</span></div>
+        </div>
+      </div>
+
+      <div class="footer-text">🌸 软糯工作台 · 每天进步一点点 🌸</div>
+
     </div>
-
-    <!-- ============ 8. 菜谱 ============ -->
-    <div class="panel" id="panel-recipe">
-      <div class="card">
-        <span class="layer-tag">A-三餐规划</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--yellow-100);">
-            <svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="3" fill="#fff" stroke="#F9E29C" stroke-width="1.5"/><circle cx="18" cy="12" r="3" fill="#fff" stroke="#F9E29C" stroke-width="1.5"/><rect x="9" y="9" width="6" height="6" fill="#fff" stroke="#F9E29C" stroke-width="1.5"/></svg>
-          </span>
-          每日三餐规划
-        </div>
-        <div class="meal-card breakfast">
-          <div class="meal-header">
-            <span class="meal-icon">早</span>
-            <span class="meal-title">早餐 · 晨光</span>
-            <span class="meal-time">07:30</span>
-          </div>
-          <div class="meal-items">
-            <span class="meal-tag">温牛奶</span>
-            <span class="meal-tag">水煮蛋</span>
-            <span class="meal-tag">全麦面包</span>
-            <span class="meal-tag">蓝莓</span>
-          </div>
-        </div>
-        <div class="meal-card lunch">
-          <div class="meal-header">
-            <span class="meal-icon">午</span>
-            <span class="meal-title">午餐 · 暖阳</span>
-            <span class="meal-time">12:00</span>
-          </div>
-          <div class="meal-items">
-            <span class="meal-tag">小米饭</span>
-            <span class="meal-tag">清蒸鲈鱼</span>
-            <span class="meal-tag">蒜蓉西兰花</span>
-            <span class="meal-tag">番茄豆腐汤</span>
-          </div>
-        </div>
-        <div class="meal-card dinner">
-          <div class="meal-header">
-            <span class="meal-icon">晚</span>
-            <span class="meal-title">晚餐 · 静夜</span>
-            <span class="meal-time">18:00</span>
-          </div>
-          <div class="meal-items">
-            <span class="meal-tag">小米南瓜粥</span>
-            <span class="meal-tag">凉拌菠菜</span>
-            <span class="meal-tag">山药炖鸡汤</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="layer-tag">B-食谱收藏</span>
-        <div class="card-title">
-          <span class="icon-badge" style="background:var(--green-100);">
-            <svg viewBox="0 0 24 24"><path d="M5 4 L5 20 L19 20 L19 8 L15 4 Z" fill="#fff" stroke="#C2E2BE" stroke-width="1.5"/><line x1="8" y1="10" x2="16" y2="10" stroke="#C2E2BE" stroke-width="1"/><line x1="8" y1="13" x2="16" y2="13" stroke="#C2E2BE" stroke-width="1"/><line x1="8" y1="16" x2="13" y2="16" stroke="#C2E2BE" stroke-width="1"/></svg>
-          </span>
-          食谱收藏
-        </div>
-        <div class="recipe-cat">
-          <button class="recipe-cat-btn active" onclick="switchRecipeCat(this)">全部</button>
-          <button class="recipe-cat-btn" onclick="switchRecipeCat(this)">清淡养胃</button>
-          <button class="recipe-cat-btn" onclick="switchRecipeCat(this)">润燥滋补</button>
-          <button class="recipe-cat-btn" onclick="switchRecipeCat(this)">家常菜</button>
-        </div>
-        <div class="recipe-item">
-          <span class="recipe-emoji">🍲</span>
-          <div style="flex:1;">
-            <div class="recipe-name">山药炖鸡汤</div>
-            <div class="recipe-desc">健脾养胃 · 孕期滋补</div>
-          </div>
-          <span class="book-tag" style="background:var(--green-50);color:#7BAB6E;">滋补</span>
-        </div>
-        <div class="recipe-item">
-          <span class="recipe-emoji">🥣</span>
-          <div style="flex:1;">
-            <div class="recipe-name">小米南瓜粥</div>
-            <div class="recipe-desc">养胃暖身 · 易消化</div>
-          </div>
-          <span class="book-tag" style="background:var(--yellow-50);color:#C4A02E;">清淡</span>
-        </div>
-        <div class="recipe-item">
-          <span class="recipe-emoji">🐟</span>
-          <div style="flex:1;">
-            <div class="recipe-name">清蒸鲈鱼</div>
-            <div class="recipe-desc">高蛋白 · 清淡鲜美</div>
-          </div>
-          <span class="book-tag" style="background:var(--blue-50);color:#5B9BC9;">家常</span>
-        </div>
-        <div class="recipe-item">
-          <span class="recipe-emoji">🥬</span>
-          <div style="flex:1;">
-            <div class="recipe-name">蒜蓉西兰花</div>
-            <div class="recipe-desc">维生素丰富 · 清爽</div>
-          </div>
-          <span class="book-tag" style="background:var(--blue-50);color:#5B9BC9;">家常</span>
-        </div>
-        <div class="recipe-item">
-          <span class="recipe-emoji">🍐</span>
-          <div style="flex:1;">
-            <div class="recipe-name">银耳雪梨汤</div>
-            <div class="recipe-desc">润肺止咳 · 秋燥必备</div>
-          </div>
-          <span class="book-tag" style="background:var(--green-50);color:#7BAB6E;">润燥</span>
-        </div>
-      </div>
-    </div>
-
   </div>
-
-  <!-- 板块指示器 -->
-  <div class="section-indicator" id="sectionIndicator">
-    <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-  </div>
-
-  <!-- 底部装饰 -->
-  <div class="bottom-spacer">
-    <span class="deco">
-      <svg viewBox="0 0 30 30"><g transform="translate(15,15)"><ellipse cx="0" cy="-7" rx="5" ry="7" fill="#F7BDD0"/><ellipse cx="7" cy="-2" rx="7" ry="5" fill="#F7BDD0" transform="rotate(72 7 -2)"/><ellipse cx="4" cy="7" rx="5" ry="7" fill="#F7BDD0" transform="rotate(144 4 7)"/><ellipse cx="-4" cy="7" rx="5" ry="7" fill="#F7BDD0" transform="rotate(-144 -4 7)"/><ellipse cx="-7" cy="-2" rx="7" ry="5" fill="#F7BDD0" transform="rotate(-72 -7 -2)"/><circle cx="0" cy="0" r="4" fill="#FCEBBE"/></g></svg>
-    </span>
-    <span class="deco">
-      <svg viewBox="0 0 30 30"><path d="M15 5 L18 12 L25 13 L20 18 L22 25 L15 21 L8 25 L10 18 L5 13 L12 12 Z" fill="#9FCB95" opacity="0.7"/></svg>
-    </span>
-    <span class="deco">
-      <svg viewBox="0 0 30 20"><path d="M3 18 Q15 4 27 18 Q15 13 3 18z" fill="#D2EAF7" opacity="0.7"/></svg>
-    </span>
-  </div>
-
 </div>
 
 <script>
-// ====== 板块切换 ======
-var panelOrder=['plan','read','sport','study','teach','memo','review','recipe'];
+const panels=['plan','read','sport','study','teach','memo','review','recipe'];
 function switchPanel(name,el){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('panel-'+name).classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  if(el){el.classList.add('active');}
-  else{document.querySelector('.nav-item[data-panel="'+name+'"]').classList.add('active');}
-  var idx=panelOrder.indexOf(name);
-  document.querySelectorAll('.section-indicator .dot').forEach(function(d,i){
-    d.classList.toggle('active',i===idx);
-  });
-  window.scrollTo({top:0,behavior:'smooth'});
+  if(el) el.classList.add('active');
+  else document.querySelector('.nav-item[data-panel="'+name+'"]').classList.add('active');
+  document.querySelector('.content-area').scrollTop=0;
 }
 
-// ====== 日历 ======
-var calDate=new Date(2026,6,1);
-var todayDate=28;
-var selectedDate=28;
-function renderCalendar(){
-  var year=calDate.getFullYear();
-  var month=calDate.getMonth();
-  var monthNames=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-  document.getElementById('calMonthLabel').textContent=year+'年'+monthNames[month];
-  var firstDay=new Date(year,month,1).getDay();
-  var daysInMonth=new Date(year,month+1,0).getDate();
-  var daysInPrevMonth=new Date(year,month,0).getDate();
-  var html='';
-  for(var i=firstDay-1;i>=0;i--){html+='<div class="cal-day other-month">'+(daysInPrevMonth-i)+'</div>';}
-  var taskDays=[25,26,27,28];
-  for(var d=1;d<=daysInMonth;d++){
-    var classes='cal-day';
-    if(year===2026&&month===6&&d===todayDate){classes+=' today';}
-    if(year===2026&&month===6&&d===selectedDate){classes+=' selected';}
-    if(taskDays.indexOf(d)!==-1){classes+=' has-task';}
-    html+='<div class="'+classes+'" onclick="selectDate('+d+')">'+d+'</div>';
+let calDate=new Date(2026,6,1);
+let selected=28;
+function renderCal(){
+  const y=calDate.getFullYear(),m=calDate.getMonth();
+  document.getElementById('calMonth').textContent=y+'年'+(m+1)+'月';
+  const first=new Date(y,m,1).getDay();
+  const days=new Date(y,m+1,0).getDate();
+  const prev=new Date(y,m,0).getDate();
+  let html='';
+  for(let i=first-1;i>=0;i--) html+='<div class="cal-day other">'+(prev-i)+'</div>';
+  for(let d=1;d<=days;d++){
+    let cls='cal-day';
+    if(d===selected) cls+=' selected';
+    if([25,26,27,28].includes(d)) cls+=' dot';
+    html+='<div class="'+cls+'" onclick="selectDate('+d+')">'+d+'</div>';
   }
-  var totalCells=firstDay+daysInMonth;
-  var remaining=(7-totalCells%7)%7;
-  for(var j=1;j<=remaining;j++){html+='<div class="cal-day other-month">'+j+'</div>';}
+  const total=first+days,rem=(7-total%7)%7;
+  for(let j=1;j<=rem;j++) html+='<div class="cal-day other">'+j+'</div>';
   document.getElementById('calDays').innerHTML=html;
 }
-function selectDate(d){selectedDate=d;renderCalendar();}
-function changeMonth(delta){calDate.setMonth(calDate.getMonth()+delta);renderCalendar();}
+function selectDate(d){selected=d;renderCal();}
+function changeMonth(d){calDate.setMonth(calDate.getMonth()+d);renderCal();}
 
-// ====== 待办 ======
-var todos=[
+let todos=[
   {text:'散步30分钟',done:true},
   {text:'毛笔练字25分钟',done:true},
   {text:'阅读《人间草木》12页',done:true},
@@ -1658,64 +780,44 @@ var todos=[
   {text:'睡前拉伸15分钟',done:false}
 ];
 function renderTodos(){
-  var list=document.getElementById('todoList');
-  if(todos.length===0){
-    list.innerHTML='<div style="text-align:center;color:var(--text-dim);font-size:12px;padding:20px;">还没有待办哦，添加一个吧～</div>';
-  }else{
-    list.innerHTML=todos.map(function(t,i){
-      return '<div class="todo-item'+(t.done?' done':'')+'">'+
-        '<div class="todo-checkbox'+(t.done?' checked':'')+'" onclick="toggleTodo('+i+')">'+
-        '<svg viewBox="0 0 24 24"><path d="M5 12 L10 17 L19 7" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
-        '</div>'+
-        '<div class="todo-text">'+t.text+'</div>'+
-        '<button class="todo-delete" onclick="deleteTodo('+i+')">✕</button>'+
-      '</div>';
-    }).join('');
-  }
-  var pending=todos.filter(function(t){return !t.done;}).length;
-  document.getElementById('todoCount').textContent=pending;
+  const el=document.getElementById('todoList');
+  el.innerHTML=todos.map((t,i)=>`
+    <div class="todo-item ${t.done?'done':''}">
+      <div class="todo-check ${t.done?'checked':''}" onclick="toggleTodo(${i})">
+        <svg viewBox="0 0 24 24"><path d="M5 12 L10 17 L19 7" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="todo-text">${t.text}</div>
+      <button class="todo-del" onclick="delTodo(${i})">✕</button>
+    </div>
+  `).join('');
+  const done=todos.filter(t=>t.done).length,total=todos.length;
+  document.getElementById('todoTag').textContent=done+'/'+total;
+  const pct=total?Math.round(done/total*100):0;
+  document.getElementById('progressNum').textContent=pct+'%';
+  document.getElementById('progressFill').style.width=pct+'%';
 }
-function toggleTodo(i){todos[i].done=!todos[i].done;renderTodos();updateProgress();}
-function deleteTodo(i){todos.splice(i,1);renderTodos();updateProgress();}
+function toggleTodo(i){todos[i].done=!todos[i].done;renderTodos();}
+function delTodo(i){todos.splice(i,1);renderTodos();}
 function addTodo(){
-  var input=document.getElementById('todoInput');
-  var text=input.value.trim();
-  if(text){todos.push({text:text,done:false});input.value='';renderTodos();updateProgress();}
+  const inp=document.getElementById('todoInput');
+  const v=inp.value.trim();
+  if(v){todos.push({text:v,done:false});inp.value='';renderTodos();}
 }
+function resetAll(){todos.forEach(t=>t.done=false);renderTodos();}
 
-// ====== 进度 ======
-function updateProgress(){
-  if(todos.length===0){document.querySelector('.progress-fill').style.width='0%';document.querySelector('.progress-percent').textContent='0%';return;}
-  var doneCount=todos.filter(function(t){return t.done;}).length;
-  var pct=Math.round(doneCount/todos.length*100);
-  document.querySelector('.progress-fill').style.width=pct+'%';
-  document.querySelector('.progress-percent').textContent=pct+'%';
-}
-function resetProgress(){
-  todos.forEach(function(t){t.done=false;});
-  renderTodos();
-  updateProgress();
-}
-
-// ====== 书单切换 ======
-function switchBookTab(el,type){
-  el.parentElement.querySelectorAll('.book-status-tab').forEach(function(t){t.classList.remove('active');});
+function switchBookTab(el,idx){
+  el.parentElement.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('bookListToRead').style.display=type==='to-read'?'block':'none';
-  document.getElementById('bookListRead').style.display=type==='read'?'block':'none';
+  document.getElementById('bookList0').style.display=idx===0?'block':'none';
+  document.getElementById('bookList1').style.display=idx===1?'block':'none';
 }
-
-// ====== 菜谱分类 ======
-function switchRecipeCat(el){
-  el.parentElement.querySelectorAll('.recipe-cat-btn').forEach(function(b){b.classList.remove('active');});
+function switchRecipeTab(el){
+  el.parentElement.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
 }
 
-// ====== 初始化 ======
-renderCalendar();
+renderCal();
 renderTodos();
-updateProgress();
 </script>
-
 </body>
 </html>
