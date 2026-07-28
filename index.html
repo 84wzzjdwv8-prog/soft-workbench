@@ -274,7 +274,8 @@ html,body{
 }
 .todo-check svg{width:14px;height:14px;display:none;}
 .todo-check.checked svg{display:block;}
-.todo-text{flex:1;font-size:14px;color:var(--text-main);transition:var(--transition);}
+.todo-text{flex:1;font-size:14px;color:var(--text-main);transition:var(--transition);outline:none;border-radius:8px;padding:2px 4px;}
+.todo-text:focus{background:rgba(255,255,255,0.6);box-shadow:0 0 0 2px var(--pink-100);}
 .todo-item.done .todo-text{text-decoration:line-through;color:var(--text-dim);}
 .todo-del{
   width:22px;height:22px;border:none;background:transparent;
@@ -772,38 +773,54 @@ function renderCal(){
 function selectDate(d){selected=d;renderCal();}
 function changeMonth(d){calDate.setMonth(calDate.getMonth()+d);renderCal();}
 
-let todos=[
-  {text:'散步30分钟',done:true},
-  {text:'毛笔练字25分钟',done:true},
-  {text:'阅读《人间草木》12页',done:true},
-  {text:'整理下周教案框架',done:true},
-  {text:'睡前拉伸15分钟',done:false}
-];
+let todos=[];
+function loadTodos(){
+  try{
+    const s=localStorage.getItem('soft_todo');
+    if(s) todos=JSON.parse(s);
+  }catch(e){todos=[];}
+}
+function saveTodos(){
+  try{localStorage.setItem('soft_todo',JSON.stringify(todos));}catch(e){}
+}
 function renderTodos(){
   const el=document.getElementById('todoList');
-  el.innerHTML=todos.map((t,i)=>`
-    <div class="todo-item ${t.done?'done':''}">
-      <div class="todo-check ${t.done?'checked':''}" onclick="toggleTodo(${i})">
-        <svg viewBox="0 0 24 24"><path d="M5 12 L10 17 L19 7" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  if(todos.length===0){
+    el.innerHTML='<div style="text-align:center;color:var(--text-dim);font-size:13px;padding:24px 0;">还没有待办，在下方添加一个吧 🌸</div>';
+  }else{
+    el.innerHTML=todos.map((t,i)=>`
+      <div class="todo-item ${t.done?'done':''}">
+        <div class="todo-check ${t.done?'checked':''}" onclick="toggleTodo(${i})">
+          <svg viewBox="0 0 24 24"><path d="M5 12 L10 17 L19 7" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="todo-text" contenteditable="true" onblur="editTodo(${i},this.textContent)" onkeypress="if(event.key==='Enter'){this.blur();}">${t.text}</div>
+        <button class="todo-del" onclick="delTodo(${i})">✕</button>
       </div>
-      <div class="todo-text">${t.text}</div>
-      <button class="todo-del" onclick="delTodo(${i})">✕</button>
-    </div>
-  `).join('');
+    `).join('');
+  }
   const done=todos.filter(t=>t.done).length,total=todos.length;
   document.getElementById('todoTag').textContent=done+'/'+total;
   const pct=total?Math.round(done/total*100):0;
   document.getElementById('progressNum').textContent=pct+'%';
   document.getElementById('progressFill').style.width=pct+'%';
 }
-function toggleTodo(i){todos[i].done=!todos[i].done;renderTodos();}
-function delTodo(i){todos.splice(i,1);renderTodos();}
+function toggleTodo(i){todos[i].done=!todos[i].done;saveTodos();renderTodos();}
+function delTodo(i){todos.splice(i,1);saveTodos();renderTodos();}
 function addTodo(){
   const inp=document.getElementById('todoInput');
   const v=inp.value.trim();
-  if(v){todos.push({text:v,done:false});inp.value='';renderTodos();}
+  if(v){todos.push({text:v,done:false});inp.value='';saveTodos();renderTodos();}
 }
-function resetAll(){todos.forEach(t=>t.done=false);renderTodos();}
+function editTodo(i,val){
+  val=(val||'').trim();
+  if(val){todos[i].text=val;saveTodos();}
+  else{todos.splice(i,1);saveTodos();renderTodos();}
+}
+function resetAll(){
+  if(confirm('确定要重置所有待办吗？已完成项将取消勾选。')){
+    todos.forEach(t=>t.done=false);saveTodos();renderTodos();
+  }
+}
 
 function switchBookTab(el,idx){
   el.parentElement.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -816,6 +833,7 @@ function switchRecipeTab(el){
   el.classList.add('active');
 }
 
+loadTodos();
 renderCal();
 renderTodos();
 </script>
